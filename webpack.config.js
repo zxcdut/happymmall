@@ -36,6 +36,15 @@ var config = {
 		    { test:/\.(gif|png|jpg|woff|svg|eot|ttf)\??.*$/,loader: 'url-loader?limit=100&name=resource/[name].[ext]' }
 		]
 	},
+	// 配置路径，啥原理还没搞明白,反正就先照着视频写了，回头再去详细学吧
+	resolve : {
+		alias : {
+			util    : __dirname + '/src/util',
+			page    : __dirname + '/src/page',
+			service : __dirname + '/src/service',
+			image   : __dirname + '/src/image'
+		}
+	},
 	plugins : [
 	    //独立通用模块到js/base.js
 	    new webpack.optimize.CommonsChunkPlugin({

@@ -1,14 +1,14 @@
 webpackJsonp([1],{
 
-/***/ 29:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(30);
+module.exports = __webpack_require__(34);
 
 
 /***/ }),
 
-/***/ 30:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25,4 +25,4 @@ console.log('我是login下的index.js');
 
 /***/ })
 
-},[29]);
+},[33]);
