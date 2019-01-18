@@ -1,0 +1,18 @@
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  23：01
+ * @Last modified time : 2019-1-14  23：01
+ * 
+ */
+
+.nav-simple{
+	height:60px;
+	line-height:60px;
+	border-bottom:1px solid #ddd;
+	background:#fff;
+}
+.nav-simple .logo{
+	font-size:26px;
+	font-weight:bold;
+	color:#C60023;
+}

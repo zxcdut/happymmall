@@ -1,7 +1,19 @@
 <!DOCTYPE html>
-<html>	
-	<%= require('html-loader!./layout/html-head.html') %>
+<html>
+	<head>		
+	    <%= require('html-loader!./layout/head-common.html') %>	    
+	    <title><%= htmlWebpackPlugin.options.title %> - happymmall电商平台</title>
+    </head>
 	<body>
-		<a href="">这是index页888</a>
+		<%= require('html-loader!./layout/nav.html') %>
+		<%= require('html-loader!./layout/header.html') %>
+		<div class="page-wrap w">
+			<%= require('html-loader!./layout/nav-side.html') %>
+			<div class="content with-nav">
+				test
+			</div>
+		</div>
+		<%= require('html-loader!./layout/footer.html') %>
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	</body>
 </html>

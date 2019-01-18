@@ -1,0 +1,31 @@
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  23：01
+ * @Last modified time : 2019-1-14  23：01
+ * 
+ */
+
+ .nav{
+ 	background:#eee;
+ 	height:30px;
+ 	line-height:30px;
+ }
+/*用户部分*/
+.nav .user{
+	float:left;
+}
+.nav .user.login{
+	display: none;
+	float:left;
+}
+.nav .user .link{
+	margin-right:5px;
+}
+/*导航链接部分*/
+.nav .nav-list{
+	float:right;
+}
+.nav .nav-list .nav-item{
+	display:inline-block;
+	margin-left:5px;
+}
