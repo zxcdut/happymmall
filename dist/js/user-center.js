@@ -1,6 +1,5 @@
-webpackJsonp([6],{
-
-/***/ 0:
+webpackJsonp([0],[
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -103,8 +102,7 @@ module.exports = _mm;
 
 
 /***/ }),
-
-/***/ 1:
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -120,15 +118,13 @@ __webpack_require__(2);
 
 
 /***/ }),
-
-/***/ 2:
+/* 2 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-
-/***/ 3:
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -155,8 +151,7 @@ module.exports = Hogan;
 
 
 /***/ }),
-
-/***/ 4:
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -585,8 +580,7 @@ module.exports = Hogan;
 
 
 /***/ }),
-
-/***/ 5:
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -933,47 +927,478 @@ var Hogan = {};
 
 
 /***/ }),
-
-/***/ 67:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(68);
-
-
-/***/ }),
-
-/***/ 68:
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-19  01：03
- * @Last modified time : 2019-1-19  01：03
- * 
+ * @Date: 2019-1-14  23：32
+ * @Last modified time : 2019-1-14  23：32
  */
 
 
 
-__webpack_require__(69);
-__webpack_require__(1);
-var _mm = __webpack_require__(0);
 
-$(function(){
-	var type     = _mm.getUrlParam('type') || 'default';
-	var $element = $('.' + type + '-success');
-	//显示对应元素
-	$element.show();
-})
+var _mm   = __webpack_require__(0);
+
+var _user = {
+	// 用户登录
+	login : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/login.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户注册
+	register : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/register.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户名验证
+	checkUsername : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/check_valid.do'),
+			data     : {
+				type     :   'username',
+				str      :  username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查登录状态
+	checkLogin : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_user_info.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户密码提示问题
+	getQuestion : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_get_question.do'),
+			data     : {
+				username : username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查密码提示问题的答案
+	checkAnswer : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//重置密码
+	resetPassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户信息
+	getUserInfo :　function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_information.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新个人信息
+	updateUserInfo : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/update_information.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 这个function(resolve,reject) 是个啥意思啊？
+	logout : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/logout.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+}
+module.exports = _user;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  23：32
+ * @Last modified time : 2019-1-14  23：32
+ */
+
+
+
+__webpack_require__(8);
+var _mm   = __webpack_require__(0);
+var _user = __webpack_require__(6);
+var _cart = __webpack_require__(9);
+var nav   = {
+	init         : function(){
+		this.bindEvent();
+		this.loadUserInfo();
+		this.loadCartCount();
+		//很关键的一步，这样输出的时候才是nav对象本身
+		return this;      
+	},
+	bindEvent    : function(){
+		// 登录点击事件
+		$('.js-login').click(function(){
+			_mm.doLogin();
+		});
+		// 注册点击事件
+		$('.js-register').click(function(){
+			window.location.href = './user-register.html' 
+		});
+		// 退出点击事件
+		$('.js-logout').click(function(){
+			_user.logout(function(res){
+				window.location.reload();
+			},function(errMsg){
+				_mm.errorTips(errMsg);
+			});
+		});
+	},
+	//加载用户信息
+	loadUserInfo : function(){
+		_user.checkLogin(function(res){
+				$('.user.not-login').hide().siblings('.user.login').show()
+				     .find('.username').text(res.username);
+			},function(errMsg){
+				
+		});
+	},
+	//加载购物车数量
+	loadCartCount : function(){
+		_cart.getCartCount(function(res){
+			$('.nav .cat-count').text(res || 0);
+		},function(errMsg){
+			$('.nav .cat-count').text(0);
+		});
+	}
+};
+//模块输出的时候初始化一下nav对象
+module.exports = nav.init();
 
 
 /***/ }),
-
-/***/ 69:
+/* 8 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
-/***/ })
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
 
-},[67]);
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-15  09：24
+ * @Last modified time : 2019-1-15  09：24
+ */
+
+
+
+
+var _mm   = __webpack_require__(0);
+
+var _cart = {
+	//检查登录状态
+	getCartCount : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/get_cart_product_count.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+}
+module.exports = _cart;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-16  00：31
+ * @Last modified time : 2019-1-16  00：31
+ */
+
+
+
+__webpack_require__(11);
+var _mm   = __webpack_require__(0);
+console.log(_mm.getUrlParam('keyword'));
+//通用页面头部
+var header   = {
+	init         : function(){
+		this.bindEvent();
+	},
+	//将url中的搜索参数回填至搜索框中
+	onLoad : function(){
+		var keyword = _mm.getUrlParam('keyword');
+		if(keyword){
+			$('#search-input').val(keyword);
+		};
+	},
+	// 搜索按钮的点击事件，点击则进行搜索提交
+	bindEvent    : function(){
+		var _this = this;
+		$('#search-btn').click(function(){
+			_this.searchSubmit();
+		});
+		// 按下回车按钮，做搜索提交
+		$('#search-input').keyup(function(e){
+			// 13是回车键的keyCode
+			if(e.keyCode === 13){
+				_this.searchSubmit();
+			}
+		});
+	},
+	//搜索的提交，这里就是调到list页，并且把搜索参数传过去，剩下的逻辑由list页来处理。
+	searchSubmit : function(){
+		var keyword = $.trim($('#search-input').val());
+		// 如果提交的时候有keyword，正常跳转到list页
+		if(keyword){
+			window.location.href = './list.html?keyword=' + keyword;
+		}
+		// 如果keyword为空，则返回首页
+		else{
+			_mm.goHome();
+		}
+	}
+};
+//模块输出的时候初始化一下header对象，因为没有地方会调用这个搜索所以就不用输出啦！
+header.init();
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-17  01：19
+ * @Last modified time : 2019-1-17  01：19
+ */
+
+
+
+__webpack_require__(13);
+var _mm           = __webpack_require__(0);
+var templateIndex = __webpack_require__(14);
+console.log(3333);
+// 侧边导航
+var navSide   ={
+	option : {
+		//name是当前页面名称
+		name : '',
+		navList : [
+		     {name : 'user-center',desc : '个人中心',href : './user-center.html',active : true},
+		     {name : 'order-list',desc : '我的订单',href : './order-list.html'},
+		     {name : 'user-pass-update',desc : '修改密码',href : './pass-update.html'},
+		     {name : 'about',desc : '关于MMall',href : './about.html'}
+		]
+	},
+	init : function(option){
+		//合并选项
+		$.extend(this.option,option);
+		this.renderNav();
+	},
+	//渲染导航菜单
+	renderNav : function(){
+		 for (var i = 0,iLength = this.option.navList.length; i < iLength;i++) {
+		 	if(this.option.navList[i].name === this.option.name){
+		 		this.option.navList[i].isActive = true;
+		 	}
+		 };
+		 //渲染list数据
+		 var navHtml = _mm.renderHtml(templateIndex,{
+		 	 navList : this.option.navList
+		 });
+		 //把html放入容器
+		 console.log(navHtml);
+		 $('.nav-side').html(navHtml);
+	}
+};
+
+//模块输出的时候初始化一下nav对象
+module.exports = navSide;
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports = "{{#navList}}\r\n{{#isActive}}\r\n<li class=\"nav-item active\">\r\n{{/isActive}}\r\n{{^isActive}}\r\n<li class=\"nav-item\">\r\n{{/isActive}}\r\n\t\t<a class=\"link\" href=\"{{href}}\">{{desc}}</a>\r\n</li>\r\n{{/navList}}\r\n\r\n";
+
+/***/ }),
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(60);
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-2-2  22：51
+ * @Last modified time : 2019-2-2  22：51
+ * 
+ */
+
+
+__webpack_require__(61);
+//引用common中nav-simple下的index.js
+__webpack_require__(1);
+//引用common中nav下的index.js
+__webpack_require__(7);
+//引用common中header下的index.js
+__webpack_require__(10);
+//引用common中nav-side下的index.js
+var navSide       = __webpack_require__(12);
+// require('util/mm.js')就表示引入util/mm.js了，
+//但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
+var _mm           = __webpack_require__(0);
+var _user         = __webpack_require__(6);
+var templateIndex = __webpack_require__(62);
+
+// 登录页的逻辑部分
+var page = {
+	init      : function(){
+		this.onLoad();
+	},
+	onLoad : function(){
+		// 初始化左侧菜单
+		navSide.init({
+			name: 'user-center'
+		});
+		// 加载用户信息
+		this.loadUserInfo();
+	},
+	// 加载用户信息
+	loadUserInfo : function(){
+		var userHtml = '';
+		_user.getUserInfo(function(res){
+			userHtml = _mm.renderHtml(templateIndex,res);
+			$('.panel-body').html(userHtml);
+		},function(errMsg){
+			_mm.errorTips(errMsg);
+		});
+	}
+};
+$(function(){
+	page.init();
+});
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"user-info\">\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">用户名：</span>\r\n\t\t<span class=\"text\">{{username}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">电 话：</span>\r\n\t\t<span class=\"text\">{{phone}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">邮 箱：</span>\r\n\t\t<span class=\"text\">{{email}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">问 题：</span>\r\n\t\t<span class=\"text\">{{question}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">答 案：</span>\r\n\t\t<span class=\"text\">{{answer}}</span>\r\n\t</div>\r\n\t<a class=\"btn btn-submit\" href=\"./user-center-update.html\">编辑</a>\r\n</div>";
+
+/***/ })
+],[59]);

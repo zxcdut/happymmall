@@ -69,7 +69,7 @@ var _mm = {
 	// 字段的验证，支持非空、手机、邮箱的判断
 	validate : function(value,type){
 		var value = $.trim(value);
-		//非空验证
+		//非空验证,当value为空时，返回false;当value有值时，返回ture。
 		if('required' === type){
 			return !!value;
 		}
@@ -85,7 +85,7 @@ var _mm = {
 	// 统一登录处理
 	doLogin : function(){
 		//跳转至登录页面，且url参数中传递当前页面路径，登录成功后回到当前页面。
-		window.location.href = './login.html?redirect=' + encodeURIComponent(window.location.href);
+		window.location.href = './user-login.html?redirect=' + encodeURIComponent(window.location.href);
 	},
 	// 回到主页
 	goHome : function(){

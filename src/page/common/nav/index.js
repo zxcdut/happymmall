@@ -25,7 +25,7 @@ var nav   = {
 		});
 		// 注册点击事件
 		$('.js-register').click(function(){
-			window.location.href = './register.html' 
+			window.location.href = './user-register.html' 
 		});
 		// 退出点击事件
 		$('.js-logout').click(function(){

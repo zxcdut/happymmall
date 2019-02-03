@@ -1,4 +1,4 @@
-webpackJsonp([0],[
+webpackJsonp([2],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -74,7 +74,7 @@ var _mm = {
 	// 字段的验证，支持非空、手机、邮箱的判断
 	validate : function(value,type){
 		var value = $.trim(value);
-		//非空验证
+		//非空验证,当value为空时，返回false;当value有值时，返回ture。
 		if('required' === type){
 			return !!value;
 		}
@@ -90,7 +90,7 @@ var _mm = {
 	// 统一登录处理
 	doLogin : function(){
 		//跳转至登录页面，且url参数中传递当前页面路径，登录成功后回到当前页面。
-		window.location.href = './login.html?redirect=' + encodeURIComponent(window.location.href);
+		window.location.href = './user-login.html?redirect=' + encodeURIComponent(window.location.href);
 	},
 	// 回到主页
 	goHome : function(){
@@ -927,84 +927,7 @@ var Hogan = {};
 
 
 /***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(37);
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-12  17：16
- * @Last modified time : 2019-1-12  17：16
- */
-
-
-
-
-__webpack_require__(38);
-//引用common中nav-simple下的index.js
-__webpack_require__(1);
-//引用common中nav下的index.js
-__webpack_require__(39);
-//引用common中header下的index.js
-__webpack_require__(43);
-//引用common中nav-side下的index.js
-var navSide = __webpack_require__(45);
-// require('util/mm.js')就表示引入util/mm.js了，
-//但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
-var _mm = __webpack_require__(0);
-
-navSide.init({
-	name : 'order-list'
-});
-
-
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 39 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1016,10 +939,132 @@ navSide.init({
 
 
 
-__webpack_require__(40);
+
 var _mm   = __webpack_require__(0);
-var _user = __webpack_require__(41);
-var _cart = __webpack_require__(42);
+
+var _user = {
+	// 用户登录
+	login : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/login.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户注册
+	register : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/register.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户名验证
+	checkUsername : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/check_valid.do'),
+			data     : {
+				type     :   'username',
+				str      :  username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查登录状态
+	checkLogin : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_user_info.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户密码提示问题
+	getQuestion : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_get_question.do'),
+			data     : {
+				username : username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查密码提示问题的答案
+	checkAnswer : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//重置密码
+	resetPassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户信息
+	getUserInfo :　function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_information.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新个人信息
+	updateUserInfo : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/update_information.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 这个function(resolve,reject) 是个啥意思啊？
+	logout : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/logout.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+}
+module.exports = _user;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  23：32
+ * @Last modified time : 2019-1-14  23：32
+ */
+
+
+
+__webpack_require__(8);
+var _mm   = __webpack_require__(0);
+var _user = __webpack_require__(6);
+var _cart = __webpack_require__(9);
 var nav   = {
 	init         : function(){
 		this.bindEvent();
@@ -1035,7 +1080,7 @@ var nav   = {
 		});
 		// 注册点击事件
 		$('.js-register').click(function(){
-			window.location.href = './register.html' 
+			window.location.href = './user-register.html' 
 		});
 		// 退出点击事件
 		$('.js-logout').click(function(){
@@ -1069,51 +1114,13 @@ module.exports = nav.init();
 
 
 /***/ }),
-/* 40 */
+/* 8 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-14  23：32
- * @Last modified time : 2019-1-14  23：32
- */
-
-
-
-
-var _mm   = __webpack_require__(0);
-
-var _user = {
-	//检查登录状态
-	checkLogin : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/get_user_info.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 这个function(resolve,reject) 是个啥意思啊？
-	logout : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/logout.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	}
-}
-module.exports = _user;
-
-/***/ }),
-/* 42 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1142,7 +1149,7 @@ var _cart = {
 module.exports = _cart;
 
 /***/ }),
-/* 43 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1154,7 +1161,7 @@ module.exports = _cart;
 
 
 
-__webpack_require__(44);
+__webpack_require__(11);
 var _mm   = __webpack_require__(0);
 console.log(_mm.getUrlParam('keyword'));
 //通用页面头部
@@ -1201,13 +1208,13 @@ header.init();
 
 
 /***/ }),
-/* 44 */
+/* 11 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 45 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1219,9 +1226,9 @@ header.init();
 
 
 
-__webpack_require__(46);
+__webpack_require__(13);
 var _mm           = __webpack_require__(0);
-var templateIndex = __webpack_require__(47);
+var templateIndex = __webpack_require__(14);
 console.log(3333);
 // 侧边导航
 var navSide   ={
@@ -1262,16 +1269,93 @@ module.exports = navSide;
 
 
 /***/ }),
-/* 46 */
+/* 13 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 47 */
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = "{{#navList}}\r\n{{#isActive}}\r\n<li class=\"nav-item active\">\r\n{{/isActive}}\r\n{{^isActive}}\r\n<li class=\"nav-item\">\r\n{{/isActive}}\r\n\t\t<a class=\"link\" href=\"{{href}}\">{{desc}}</a>\r\n</li>\r\n{{/navList}}\r\n\r\n";
 
+/***/ }),
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(46);
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-12  17：16
+ * @Last modified time : 2019-1-12  17：16
+ */
+
+
+
+
+__webpack_require__(47);
+//引用common中nav-simple下的index.js
+__webpack_require__(1);
+//引用common中nav下的index.js
+__webpack_require__(7);
+//引用common中header下的index.js
+__webpack_require__(10);
+//引用common中nav-side下的index.js
+var navSide = __webpack_require__(12);
+// require('util/mm.js')就表示引入util/mm.js了，
+//但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
+var _mm = __webpack_require__(0);
+
+navSide.init({
+	name : 'order-list'
+});
+
+
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
 /***/ })
-],[36]);
+],[45]);

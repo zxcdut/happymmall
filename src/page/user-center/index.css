@@ -1,0 +1,16 @@
+/*
+ * @autor：xiangzi
+ * @Date: 2019-2-2  22：51
+ * @Last modified time : 2019-2-2  22：51
+ * 
+ */
+
+.form-line{
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+}
+.form-line .label{
+	display: inline-block;
+	width: 60px;
+}
