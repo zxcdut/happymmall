@@ -1,4 +1,69 @@
-webpackJsonp([1],{
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/dist/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 79);
+/******/ })
+/************************************************************************/
+/******/ ({
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -12,7 +77,7 @@ webpackJsonp([1],{
 
 
 
-var Hogan = __webpack_require__(3);
+var Hogan = __webpack_require__(2);
 var conf = {
 	serverHost : ''
 };
@@ -110,14 +175,130 @@ module.exports = _mm;
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
+ * @Date: 2019-1-14  23：32
+ * @Last modified time : 2019-1-14  23：32
  */
 
 
 
-__webpack_require__(2);
 
+var _mm   = __webpack_require__(0);
+
+var _user = {
+	// 用户登录
+	login : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/login.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户注册
+	register : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/register.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户名验证
+	checkUsername : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/check_valid.do'),
+			data     : {
+				type     :   'username',
+				str      :  username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查登录状态
+	checkLogin : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_user_info.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户密码提示问题
+	getQuestion : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_get_question.do'),
+			data     : {
+				username : username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查密码提示问题的答案
+	checkAnswer : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//重置密码
+	resetPassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户信息
+	getUserInfo :　function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_information.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新个人信息
+	updateUserInfo : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/update_information.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+    // 登录状态下更新密码
+	updatePassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 这个function(resolve,reject) 是个啥意思啊？
+	logout : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/logout.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+}
+module.exports = _user;
 
 /***/ }),
 
@@ -139,6 +320,7 @@ console.log(_mm.getUrlParam('keyword'));
 //通用页面头部
 var header   = {
 	init         : function(){
+		this.onLoad();
 		this.bindEvent();
 	},
 	//将url中的搜索参数回填至搜索框中
@@ -212,7 +394,7 @@ var navSide   ={
 		navList : [
 		     {name : 'user-center',desc : '个人中心',href : './user-center.html',active : true},
 		     {name : 'order-list',desc : '我的订单',href : './order-list.html'},
-		     {name : 'user-pass-update',desc : '修改密码',href : './pass-update.html'},
+		     {name : 'user-pass-update',desc : '修改密码',href : './user-pass-update.html'},
 		     {name : 'about',desc : '关于MMall',href : './about.html'}
 		]
 	},
@@ -259,13 +441,6 @@ module.exports = "{{#navList}}\r\n{{#isActive}}\r\n<li class=\"nav-item active\"
 /***/ }),
 
 /***/ 2:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -285,15 +460,15 @@ module.exports = "{{#navList}}\r\n{{#isActive}}\r\n<li class=\"nav-item active\"
 
 // This file is for use with Node.js. See dist/ for browser files.
 
-var Hogan = __webpack_require__(4);
-Hogan.Template = __webpack_require__(5).Template;
+var Hogan = __webpack_require__(3);
+Hogan.Template = __webpack_require__(4).Template;
 Hogan.template = Hogan.Template;
 module.exports = Hogan;
 
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -723,7 +898,7 @@ module.exports = Hogan;
 
 /***/ }),
 
-/***/ 5:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1071,7 +1246,69 @@ var Hogan = {};
 
 /***/ }),
 
+/***/ 5:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
+ */
+
+
+
+__webpack_require__(6);
+
+
+/***/ }),
+
 /***/ 6:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-15  09：24
+ * @Last modified time : 2019-1-15  09：24
+ */
+
+
+
+
+var _mm   = __webpack_require__(0);
+
+var _cart = {
+	//检查登录状态
+	getCartCount : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/get_cart_product_count.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+}
+module.exports = _cart;
+
+/***/ }),
+
+/***/ 79:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(80);
+
+
+/***/ }),
+
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1083,126 +1320,61 @@ var Hogan = {};
 
 
 
-
+__webpack_require__(9);
 var _mm   = __webpack_require__(0);
-
-var _user = {
-	// 用户登录
-	login : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/login.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
+var _user = __webpack_require__(1);
+var _cart = __webpack_require__(7);
+var nav   = {
+	init         : function(){
+		this.bindEvent();
+		this.loadUserInfo();
+		this.loadCartCount();
+		//很关键的一步，这样输出的时候才是nav对象本身
+		return this;      
+	},
+	bindEvent    : function(){
+		// 登录点击事件
+		$('.js-login').click(function(){
+			_mm.doLogin();
+		});
+		// 注册点击事件
+		$('.js-register').click(function(){
+			window.location.href = './user-register.html' 
+		});
+		// 退出点击事件
+		$('.js-logout').click(function(){
+			_user.logout(function(res){
+				window.location.reload();
+			},function(errMsg){
+				_mm.errorTips(errMsg);
+			});
 		});
 	},
-	// 用户注册
-	register : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/register.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
+	//加载用户信息
+	loadUserInfo : function(){
+		_user.checkLogin(function(res){
+				$('.user.not-login').hide().siblings('.user.login').show()
+				     .find('.username').text(res.username);
+			},function(errMsg){
+				
 		});
 	},
-	// 用户名验证
-	checkUsername : function(username,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/check_valid.do'),
-			data     : {
-				type     :   'username',
-				str      :  username
-			},
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//检查登录状态
-	checkLogin : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/get_user_info.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 获取用户密码提示问题
-	getQuestion : function(username,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_get_question.do'),
-			data     : {
-				username : username
-			},
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//检查密码提示问题的答案
-	checkAnswer : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//重置密码
-	resetPassword : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 获取用户信息
-	getUserInfo :　function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/get_information.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 更新个人信息
-	updateUserInfo : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/update_information.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 这个function(resolve,reject) 是个啥意思啊？
-	logout : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/logout.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
+	//加载购物车数量
+	loadCartCount : function(){
+		_cart.getCartCount(function(res){
+			$('.nav .cat-count').text(res || 0);
+		},function(errMsg){
+			$('.nav .cat-count').text(0);
 		});
 	}
-}
-module.exports = _user;
-
-/***/ }),
-
-/***/ 63:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(64);
+};
+//模块输出的时候初始化一下nav对象
+module.exports = nav.init();
 
 
 /***/ }),
 
-/***/ 64:
+/***/ 80:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1214,11 +1386,11 @@ module.exports = __webpack_require__(64);
  */
 
 
-__webpack_require__(65);
+__webpack_require__(81);
 //引用common中nav-simple下的index.js
-__webpack_require__(1);
+__webpack_require__(5);
 //引用common中nav下的index.js
-__webpack_require__(7);
+__webpack_require__(8);
 //引用common中header下的index.js
 __webpack_require__(10);
 //引用common中nav-side下的index.js
@@ -1226,8 +1398,8 @@ var navSide       = __webpack_require__(12);
 // require('util/mm.js')就表示引入util/mm.js了，
 //但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
 var _mm           = __webpack_require__(0);
-var _user         = __webpack_require__(6);
-var templateIndex = __webpack_require__(66);
+var _user         = __webpack_require__(1);
+var templateIndex = __webpack_require__(82);
 
 // 登录页的逻辑部分
 var page = {
@@ -1244,8 +1416,8 @@ var page = {
 		this.loadUserInfo();
 	},
 	bindEvent : function(){
+        var _this = this;
 		$(document).on('click','.btn-submit',function(){
-			var _this = this;
 			//点击提交按钮后的动作
 			var userInfo = {
 				phone    : $.trim($('#phone').val()),
@@ -1253,7 +1425,7 @@ var page = {
 				question : $.trim($('#question').val()),
 				answer   : $.trim($('#answer').val())
 			};
-			validateResult = _this.validateForm(userInfo);
+			var validateResult = _this.validateForm(userInfo);
 			if(validateResult.status){
 				_user.updateUserInfo(userInfo,function(res,msg){
 					_mm.successTips(msg);
@@ -1316,121 +1488,25 @@ $(function(){
 
 /***/ }),
 
-/***/ 65:
+/***/ 81:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 66:
+/***/ 82:
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"user-info\">\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">用户名：</span>\r\n\t\t<span class=\"text\">{{username}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">电 话：</span>\r\n\t\t<input class=\"input\" id=\"phone\" autocomplete=\"off\" value=\"{{phone}}\" />\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">邮 箱：</span>\r\n\t\t<input class=\"input\" id=\"email\" autocomplete=\"off\" value=\"{{email}}\" />\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">问 题：</span>\r\n\t\t<input class=\"input\" id=\"question\" autocomplete=\"off\" value=\"{{question}}\" />\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">答 案：</span>\r\n\t\t<input class=\"input\" id=\"answer\" autocomplete=\"off\" value=\"{{answer}}\" />\r\n\t</div>\r\n\t<span class=\"btn btn-submit\">提交</span>\r\n</div>";
 
 /***/ }),
 
-/***/ 7:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-14  23：32
- * @Last modified time : 2019-1-14  23：32
- */
-
-
-
-__webpack_require__(8);
-var _mm   = __webpack_require__(0);
-var _user = __webpack_require__(6);
-var _cart = __webpack_require__(9);
-var nav   = {
-	init         : function(){
-		this.bindEvent();
-		this.loadUserInfo();
-		this.loadCartCount();
-		//很关键的一步，这样输出的时候才是nav对象本身
-		return this;      
-	},
-	bindEvent    : function(){
-		// 登录点击事件
-		$('.js-login').click(function(){
-			_mm.doLogin();
-		});
-		// 注册点击事件
-		$('.js-register').click(function(){
-			window.location.href = './user-register.html' 
-		});
-		// 退出点击事件
-		$('.js-logout').click(function(){
-			_user.logout(function(res){
-				window.location.reload();
-			},function(errMsg){
-				_mm.errorTips(errMsg);
-			});
-		});
-	},
-	//加载用户信息
-	loadUserInfo : function(){
-		_user.checkLogin(function(res){
-				$('.user.not-login').hide().siblings('.user.login').show()
-				     .find('.username').text(res.username);
-			},function(errMsg){
-				
-		});
-	},
-	//加载购物车数量
-	loadCartCount : function(){
-		_cart.getCartCount(function(res){
-			$('.nav .cat-count').text(res || 0);
-		},function(errMsg){
-			$('.nav .cat-count').text(0);
-		});
-	}
-};
-//模块输出的时候初始化一下nav对象
-module.exports = nav.init();
-
-
-/***/ }),
-
-/***/ 8:
+/***/ 9:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-15  09：24
- * @Last modified time : 2019-1-15  09：24
- */
-
-
-
-
-var _mm   = __webpack_require__(0);
-
-var _cart = {
-	//检查登录状态
-	getCartCount : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/cart/get_cart_product_count.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	}
-}
-module.exports = _cart;
-
 /***/ })
 
-},[63]);
+/******/ });

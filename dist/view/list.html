@@ -1,9 +1,98 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-	<link href="/dist/css/common.css?d54b189426d163913f9b" rel="stylesheet"></head>
+	<head>		
+	    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="keywords" content="happymmall,电商">
+<meta name="description" content="happymmall电商平台开发教程">	    
+	    <title>列表页 - happymmall电商平台</title>
+    <link href="/dist/css/list.css?1219d6cd8f68d77e0dad" rel="stylesheet"><link href="/dist/css/common.css?1219d6cd8f68d77e0dad" rel="stylesheet"></head>
 	<body>
-	<script src="/dist/js/base.js?d54b189426d163913f9b"></script></body>
+		<div class="nav">
+	<div class="w">
+		<div class="user-info">
+			<span class="user not-login">
+				<span class="link js-login">登录</span>
+				<span class="link js-register">注册</span>
+			</span>
+			<span class="user login">
+				<span class="line-text">
+					欢迎,
+					<span class="username">祥子</span>
+				</span>
+				<span class="link js-logout">退出</span>
+			</span>
+		</div>
+		<ul class="nav-list">
+			<a class="link" href="./cart.html">
+				<li class="nav-item">
+				    <i class="fa fa-shopping-cart"></i>
+				        购物车（<span class="cart-cont">0</span>）
+			    </li>
+			</a>
+			<li class="nav-item">
+				<a class="link" href="./order-list.html">我的订单</a>
+			</li>
+			<li class="nav-item">
+				<a class="link" href="./user-center.html">我的MMall</a>
+			</li>
+			<li class="nav-item">
+				<a class="link" href="./about.html">关于MMall</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+		<div class="header">
+	<div class="w">
+		<a class="logo" href="./index.html">MMall</a>
+		<div class="search-con">
+			<input class="search-input" id="search-input" placeholder="请输入商品名称" />
+			<button class="btn search-btn" id="search-btn">搜索</button>
+		</div>
+	</div>
+</div>
+		<div class="crumb">
+			<div class="w">
+				<div class="crumb-con">
+					<a class="link" href="./index.html">MMall</a>
+					<span>></span>
+					<span class="line-text">列表页</span>
+				</div>
+			</div>
+		</div>
+		<div class="page-wrap w">
+			<ul class="sort-con">
+				<li class="sort-item active" data-type="default">默认排序</li>
+				<li class="sort-item" data-type="price">
+					<span>价格</span>
+					<i class="fa fa-sort-asc"></i>
+					<i class="fa fa-sort-desc"></i>
+				</li>
+			</ul>
+			<!--list容器-->
+            <ul class="p-list-con">
+            	
+            </ul>
+            <!--分页容器-->
+            <div class="pagination"></div>
+		</div>
+		<div class="footer">
+	<div class="w">
+		<div class="links">
+			<a class="link" href="http://www.imooc.com" target="_blank">慕课网</a> |
+			<a class="link" href="http://www.baidu.com" target="_blank">百度</a> |
+			<a class="link" href="http://www.taobao.com" target="_blank">淘宝网</a> |
+			<a class="link" href="http://www.zhihu.com" target="_blank">知乎</a> 
+		</div>
+		<p class="copyright">
+			Copyright @2019 pmxjs.com All Right Reserved
+		</p>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="/dist/js/list.js?1219d6cd8f68d77e0dad"></script><script src="/dist/js/common.js?1219d6cd8f68d77e0dad"></script></body>
 </html>

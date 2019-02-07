@@ -1,0 +1,39 @@
+<div class="banner">
+    <ul>
+        <li>
+           <a href="./list.html?categoryId=100025" target="_blank">
+              <img class="banner-img" src="https://picsum.photos/830/370?image=301" />
+           </a>
+        </li>
+        
+        <li>
+           <a href="./list.html?categoryId=100025" target="_blank">
+              <img class="banner-img" src="https://picsum.photos/830/370?image=251" />
+           </a>
+        </li>
+        
+        <li>
+           <a href="./list.html?categoryId=100025" target="_blank">
+              <img class="banner-img" src="https://picsum.photos/830/370?image=480" />
+           </a>
+        </li>
+        
+        <li>
+           <a href="./list.html?categoryId=100025" target="_blank">
+              <img class="banner-img" src="https://picsum.photos/830/370?image=362" />
+           </a>
+        </li>
+        
+        <li>
+           <a href="./list.html?categoryId=100025" target="_blank">
+              <img class="banner-img" src="https://picsum.photos/830/370?image=142" />
+           </a>
+        </li>
+    </ul>
+    <div class="banner-arrow prev">
+        <i class="fa fa-angle-left"></i>
+    </div>
+    <div class="banner-arrow next">
+        <i class="fa fa-angle-right"></i>
+    </div>
+</div>

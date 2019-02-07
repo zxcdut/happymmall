@@ -1,4 +1,69 @@
-webpackJsonp([3],{
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/dist/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 66);
+/******/ })
+/************************************************************************/
+/******/ ({
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -12,7 +77,7 @@ webpackJsonp([3],{
 
 
 
-var Hogan = __webpack_require__(3);
+var Hogan = __webpack_require__(2);
 var conf = {
 	serverHost : ''
 };
@@ -110,25 +175,134 @@ module.exports = _mm;
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
+ * @Date: 2019-1-14  23：32
+ * @Last modified time : 2019-1-14  23：32
  */
 
 
 
-__webpack_require__(2);
 
+var _mm   = __webpack_require__(0);
+
+var _user = {
+	// 用户登录
+	login : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/login.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户注册
+	register : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/register.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户名验证
+	checkUsername : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/check_valid.do'),
+			data     : {
+				type     :   'username',
+				str      :  username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查登录状态
+	checkLogin : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_user_info.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户密码提示问题
+	getQuestion : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_get_question.do'),
+			data     : {
+				username : username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查密码提示问题的答案
+	checkAnswer : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//重置密码
+	resetPassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户信息
+	getUserInfo :　function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_information.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新个人信息
+	updateUserInfo : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/update_information.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+    // 登录状态下更新密码
+	updatePassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 这个function(resolve,reject) 是个啥意思啊？
+	logout : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/logout.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+}
+module.exports = _user;
 
 /***/ }),
 
 /***/ 2:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -148,15 +322,15 @@ __webpack_require__(2);
 
 // This file is for use with Node.js. See dist/ for browser files.
 
-var Hogan = __webpack_require__(4);
-Hogan.Template = __webpack_require__(5).Template;
+var Hogan = __webpack_require__(3);
+Hogan.Template = __webpack_require__(4).Template;
 Hogan.template = Hogan.Template;
 module.exports = Hogan;
 
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -586,7 +760,7 @@ module.exports = Hogan;
 
 /***/ }),
 
-/***/ 5:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -934,15 +1108,39 @@ var Hogan = {};
 
 /***/ }),
 
-/***/ 51:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(52);
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
+ */
+
+
+
+__webpack_require__(6);
 
 
 /***/ }),
 
-/***/ 52:
+/***/ 6:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 66:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(67);
+
+
+/***/ }),
+
+/***/ 67:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -954,9 +1152,9 @@ module.exports = __webpack_require__(52);
 
 
 
-__webpack_require__(53);
-__webpack_require__(1);
-var _user = __webpack_require__(6);
+__webpack_require__(68);
+__webpack_require__(5);
+var _user = __webpack_require__(1);
 var _mm   = __webpack_require__(0);
 
 //表单里的错误提示
@@ -1096,134 +1294,11 @@ $(function(){
 
 /***/ }),
 
-/***/ 53:
+/***/ 68:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
-/***/ }),
-
-/***/ 6:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-14  23：32
- * @Last modified time : 2019-1-14  23：32
- */
-
-
-
-
-var _mm   = __webpack_require__(0);
-
-var _user = {
-	// 用户登录
-	login : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/login.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 用户注册
-	register : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/register.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 用户名验证
-	checkUsername : function(username,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/check_valid.do'),
-			data     : {
-				type     :   'username',
-				str      :  username
-			},
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//检查登录状态
-	checkLogin : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/get_user_info.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 获取用户密码提示问题
-	getQuestion : function(username,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_get_question.do'),
-			data     : {
-				username : username
-			},
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//检查密码提示问题的答案
-	checkAnswer : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//重置密码
-	resetPassword : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 获取用户信息
-	getUserInfo :　function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/get_information.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 更新个人信息
-	updateUserInfo : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/update_information.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 这个function(resolve,reject) 是个啥意思啊？
-	logout : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/logout.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	}
-}
-module.exports = _user;
-
 /***/ })
 
-},[51]);
+/******/ });

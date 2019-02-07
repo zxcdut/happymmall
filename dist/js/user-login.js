@@ -1,4 +1,69 @@
-webpackJsonp([5],{
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/dist/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 63);
+/******/ })
+/************************************************************************/
+/******/ ({
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -12,7 +77,7 @@ webpackJsonp([5],{
 
 
 
-var Hogan = __webpack_require__(3);
+var Hogan = __webpack_require__(2);
 var conf = {
 	serverHost : ''
 };
@@ -110,25 +175,134 @@ module.exports = _mm;
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
+ * @Date: 2019-1-14  23：32
+ * @Last modified time : 2019-1-14  23：32
  */
 
 
 
-__webpack_require__(2);
 
+var _mm   = __webpack_require__(0);
+
+var _user = {
+	// 用户登录
+	login : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/login.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户注册
+	register : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/register.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户名验证
+	checkUsername : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/check_valid.do'),
+			data     : {
+				type     :   'username',
+				str      :  username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查登录状态
+	checkLogin : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_user_info.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户密码提示问题
+	getQuestion : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_get_question.do'),
+			data     : {
+				username : username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查密码提示问题的答案
+	checkAnswer : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//重置密码
+	resetPassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户信息
+	getUserInfo :　function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_information.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新个人信息
+	updateUserInfo : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/update_information.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+    // 登录状态下更新密码
+	updatePassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 这个function(resolve,reject) 是个啥意思啊？
+	logout : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/logout.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+}
+module.exports = _user;
 
 /***/ }),
 
 /***/ 2:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -148,15 +322,15 @@ __webpack_require__(2);
 
 // This file is for use with Node.js. See dist/ for browser files.
 
-var Hogan = __webpack_require__(4);
-Hogan.Template = __webpack_require__(5).Template;
+var Hogan = __webpack_require__(3);
+Hogan.Template = __webpack_require__(4).Template;
 Hogan.template = Hogan.Template;
 module.exports = Hogan;
 
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -586,118 +760,7 @@ module.exports = Hogan;
 
 /***/ }),
 
-/***/ 48:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(49);
-
-
-/***/ }),
-
-/***/ 49:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-12  17：16
- * @Last modified time : 2019-1-12  17：16
- */
-
-
-
-__webpack_require__(50);
-__webpack_require__(1);
-var _user = __webpack_require__(6);
-var _mm   = __webpack_require__(0);
-
-//表单里的错误提示
-var formError = {
-	show : function(errMsg){
-		$('.error-item').show().find('.err-msg').text(errMsg);
-	},
-	hide : function(){
-		$('.error-item').hide().find('.err-msg').text('');
-	}
-};
-// 登录页的逻辑部分
-var page = {
-	init      : function(){
-		//初始化一些事件，再绑定一些信息
-		this.bindEvent()
-	},
-	// 事件函数，可以理解为用户对页面的操作
-	bindEvent : function(){
-		var _this = this;
-		//登录按钮的提交
-		$('#submit').click(function(){
-			_this.submit();
-		});
-		// 如果按下回车键，也进行提交
-		$('.user-content').keyup(function(e){
-			// keyup == 13，表示回车键
-			if(e.keyup ==13 ){
-				_this.submit();
-			}
-		});
-	},
-	// 封装一个伪提交表单
-	submit    : function(){
-		//提交后端之前肯定是要前端先做表单验证
-		//将文本框中用户输入的内容取出来
-		var formData = {
-			username : $.trim($('#username').val()),
-			password : $.trim($('#password').val())
-		};
-		console.log('用户名:' + formData.username);
-		console.log('密码:' + formData.password);
-		// 获取表单验证的结果
-		var validateResult = this.formValidate(formData);
-		// 表单验证成功时
-		if(validateResult.status){
-            console.log('开始调用_user.login（）函数');
-			_user.login(formData,function(res){
-				window.location.href = _mm.getUrlParam('redirect') || './index.html';
-			},function(errMsg){
-				formError.show(errMsg);
-			});
-		}
-		//验证失败时
-		else{
-			//前端展示错误提示
-			formError.show(validateResult.msg);
-		}
-	},
-	//表单字段的验证
-	formValidate : function(formData){
-		var result = {
-			status : false,
-			msg    : '',
-		};
-		// 当formData.username为空值是触发该函数
-		if(!_mm.validate(formData.username,'required')){
-			result.msg = '用户名不能为空';
-			return result;
-		}
-		// 当formData.password为空值是触发该函数
-		if(!_mm.validate(formData.password,'required')){
-			result.msg = '用户密码不能为空';
-			return result;
-		};
-		// 通过验证，返回正确提示
-		result.status = true;
-		result.msg    = '验证通过';
-		return result;
-	}
-};
-$(function(){
-	page.init();
-});
-
-
-/***/ }),
-
-/***/ 5:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1045,134 +1108,146 @@ var Hogan = {};
 
 /***/ }),
 
-/***/ 50:
+/***/ 5:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
+ */
+
+
+
+__webpack_require__(6);
+
+
+/***/ }),
+
+/***/ 6:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 6:
+/***/ 63:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(64);
+
+
+/***/ }),
+
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  23：32
- * @Last modified time : 2019-1-14  23：32
+ * @Date: 2019-1-12  17：16
+ * @Last modified time : 2019-1-12  17：16
  */
 
 
 
-
+__webpack_require__(65);
+__webpack_require__(5);
+var _user = __webpack_require__(1);
 var _mm   = __webpack_require__(0);
 
-var _user = {
-	// 用户登录
-	login : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/login.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
+//表单里的错误提示
+var formError = {
+	show : function(errMsg){
+		$('.error-item').show().find('.err-msg').text(errMsg);
 	},
-	// 用户注册
-	register : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/register.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 用户名验证
-	checkUsername : function(username,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/check_valid.do'),
-			data     : {
-				type     :   'username',
-				str      :  username
-			},
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//检查登录状态
-	checkLogin : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/get_user_info.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 获取用户密码提示问题
-	getQuestion : function(username,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_get_question.do'),
-			data     : {
-				username : username
-			},
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//检查密码提示问题的答案
-	checkAnswer : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//重置密码
-	resetPassword : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 获取用户信息
-	getUserInfo :　function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/get_information.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 更新个人信息
-	updateUserInfo : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/update_information.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 这个function(resolve,reject) 是个啥意思啊？
-	logout : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/logout.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
+	hide : function(){
+		$('.error-item').hide().find('.err-msg').text('');
 	}
-}
-module.exports = _user;
+};
+// 登录页的逻辑部分
+var page = {
+	init      : function(){
+		//初始化一些事件，再绑定一些信息
+		this.bindEvent()
+	},
+	// 事件函数，可以理解为用户对页面的操作
+	bindEvent : function(){
+		var _this = this;
+		//登录按钮的提交
+		$('#submit').click(function(){
+			_this.submit();
+		});
+		// 如果按下回车键，也进行提交
+		$('.user-content').keyup(function(e){
+			// keyup == 13，表示回车键
+			if(e.keyup ==13 ){
+				_this.submit();
+			}
+		});
+	},
+	// 封装一个伪提交表单
+	submit    : function(){
+		//提交后端之前肯定是要前端先做表单验证
+		//将文本框中用户输入的内容取出来
+		var formData = {
+			username : $.trim($('#username').val()),
+			password : $.trim($('#password').val())
+		};
+		console.log('用户名:' + formData.username);
+		console.log('密码:' + formData.password);
+		// 获取表单验证的结果
+		var validateResult = this.formValidate(formData);
+		// 表单验证成功时
+		if(validateResult.status){
+            console.log('开始调用_user.login（）函数');
+			_user.login(formData,function(res){
+				window.location.href = _mm.getUrlParam('redirect') || './index.html';
+			},function(errMsg){
+				formError.show(errMsg);
+			});
+		}
+		//验证失败时
+		else{
+			//前端展示错误提示
+			formError.show(validateResult.msg);
+		}
+	},
+	//表单字段的验证
+	formValidate : function(formData){
+		var result = {
+			status : false,
+			msg    : '',
+		};
+		// 当formData.username为空值是触发该函数
+		if(!_mm.validate(formData.username,'required')){
+			result.msg = '用户名不能为空';
+			return result;
+		}
+		// 当formData.password为空值是触发该函数
+		if(!_mm.validate(formData.password,'required')){
+			result.msg = '用户密码不能为空';
+			return result;
+		};
+		// 通过验证，返回正确提示
+		result.status = true;
+		result.msg    = '验证通过';
+		return result;
+	}
+};
+$(function(){
+	page.init();
+});
+
+
+/***/ }),
+
+/***/ 65:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[48]);
+/******/ });

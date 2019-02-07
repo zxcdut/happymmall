@@ -12,6 +12,7 @@ console.log(_mm.getUrlParam('keyword'));
 //通用页面头部
 var header   = {
 	init         : function(){
+		this.onLoad();
 		this.bindEvent();
 	},
 	//将url中的搜索参数回填至搜索框中

@@ -1,4 +1,69 @@
-webpackJsonp([2],[
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/dist/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ })
+/************************************************************************/
+/******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11,7 +76,7 @@ webpackJsonp([2],[
 
 
 
-var Hogan = __webpack_require__(3);
+var Hogan = __webpack_require__(2);
 var conf = {
 	serverHost : ''
 };
@@ -108,23 +173,133 @@ module.exports = _mm;
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
+ * @Date: 2019-1-14  23：32
+ * @Last modified time : 2019-1-14  23：32
  */
 
 
 
-__webpack_require__(2);
 
+var _mm   = __webpack_require__(0);
+
+var _user = {
+	// 用户登录
+	login : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/login.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户注册
+	register : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/register.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 用户名验证
+	checkUsername : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/check_valid.do'),
+			data     : {
+				type     :   'username',
+				str      :  username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查登录状态
+	checkLogin : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_user_info.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户密码提示问题
+	getQuestion : function(username,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_get_question.do'),
+			data     : {
+				username : username
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//检查密码提示问题的答案
+	checkAnswer : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	//重置密码
+	resetPassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取用户信息
+	getUserInfo :　function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/get_information.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新个人信息
+	updateUserInfo : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/update_information.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+    // 登录状态下更新密码
+	updatePassword : function(userInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/reset_password.do'),
+			data     : userInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 这个function(resolve,reject) 是个啥意思啊？
+	logout : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/user/logout.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+}
+module.exports = _user;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -144,14 +319,14 @@ __webpack_require__(2);
 
 // This file is for use with Node.js. See dist/ for browser files.
 
-var Hogan = __webpack_require__(4);
-Hogan.Template = __webpack_require__(5).Template;
+var Hogan = __webpack_require__(3);
+Hogan.Template = __webpack_require__(4).Template;
 Hogan.template = Hogan.Template;
 module.exports = Hogan;
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -580,7 +755,7 @@ module.exports = Hogan;
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -927,126 +1102,26 @@ var Hogan = {};
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  23：32
- * @Last modified time : 2019-1-14  23：32
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
  */
 
 
 
+__webpack_require__(6);
 
-var _mm   = __webpack_require__(0);
 
-var _user = {
-	// 用户登录
-	login : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/login.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 用户注册
-	register : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/register.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 用户名验证
-	checkUsername : function(username,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/check_valid.do'),
-			data     : {
-				type     :   'username',
-				str      :  username
-			},
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//检查登录状态
-	checkLogin : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/get_user_info.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 获取用户密码提示问题
-	getQuestion : function(username,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_get_question.do'),
-			data     : {
-				username : username
-			},
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//检查密码提示问题的答案
-	checkAnswer : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_check_answer.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	//重置密码
-	resetPassword : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/forget_reset_password.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 获取用户信息
-	getUserInfo :　function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/get_information.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 更新个人信息
-	updateUserInfo : function(userInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/update_information.do'),
-			data     : userInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 这个function(resolve,reject) 是个啥意思啊？
-	logout : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/user/logout.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	}
-}
-module.exports = _user;
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 7 */
@@ -1055,16 +1130,45 @@ module.exports = _user;
 "use strict";
 /*
  * @autor：xiangzi
+ * @Date: 2019-1-15  09：24
+ * @Last modified time : 2019-1-15  09：24
+ */
+
+
+
+
+var _mm   = __webpack_require__(0);
+
+var _cart = {
+	//检查登录状态
+	getCartCount : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/get_cart_product_count.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+}
+module.exports = _cart;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
  * @Date: 2019-1-14  23：32
  * @Last modified time : 2019-1-14  23：32
  */
 
 
 
-__webpack_require__(8);
+__webpack_require__(9);
 var _mm   = __webpack_require__(0);
-var _user = __webpack_require__(6);
-var _cart = __webpack_require__(9);
+var _user = __webpack_require__(1);
+var _cart = __webpack_require__(7);
 var nav   = {
 	init         : function(){
 		this.bindEvent();
@@ -1114,39 +1218,10 @@ module.exports = nav.init();
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-15  09：24
- * @Last modified time : 2019-1-15  09：24
- */
-
-
-
-
-var _mm   = __webpack_require__(0);
-
-var _cart = {
-	//检查登录状态
-	getCartCount : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/cart/get_cart_product_count.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	}
-}
-module.exports = _cart;
 
 /***/ }),
 /* 10 */
@@ -1167,6 +1242,7 @@ console.log(_mm.getUrlParam('keyword'));
 //通用页面头部
 var header   = {
 	init         : function(){
+		this.onLoad();
 		this.bindEvent();
 	},
 	//将url中的搜索参数回填至搜索框中
@@ -1214,73 +1290,9 @@ header.init();
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-17  01：19
- * @Last modified time : 2019-1-17  01：19
- */
-
-
-
-__webpack_require__(13);
-var _mm           = __webpack_require__(0);
-var templateIndex = __webpack_require__(14);
-console.log(3333);
-// 侧边导航
-var navSide   ={
-	option : {
-		//name是当前页面名称
-		name : '',
-		navList : [
-		     {name : 'user-center',desc : '个人中心',href : './user-center.html',active : true},
-		     {name : 'order-list',desc : '我的订单',href : './order-list.html'},
-		     {name : 'user-pass-update',desc : '修改密码',href : './pass-update.html'},
-		     {name : 'about',desc : '关于MMall',href : './about.html'}
-		]
-	},
-	init : function(option){
-		//合并选项
-		$.extend(this.option,option);
-		this.renderNav();
-	},
-	//渲染导航菜单
-	renderNav : function(){
-		 for (var i = 0,iLength = this.option.navList.length; i < iLength;i++) {
-		 	if(this.option.navList[i].name === this.option.name){
-		 		this.option.navList[i].isActive = true;
-		 	}
-		 };
-		 //渲染list数据
-		 var navHtml = _mm.renderHtml(templateIndex,{
-		 	 navList : this.option.navList
-		 });
-		 //把html放入容器
-		 console.log(navHtml);
-		 $('.nav-side').html(navHtml);
-	}
-};
-
-//模块输出的时候初始化一下nav对象
-module.exports = navSide;
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-module.exports = "{{#navList}}\r\n{{#isActive}}\r\n<li class=\"nav-item active\">\r\n{{/isActive}}\r\n{{^isActive}}\r\n<li class=\"nav-item\">\r\n{{/isActive}}\r\n\t\t<a class=\"link\" href=\"{{href}}\">{{desc}}</a>\r\n</li>\r\n{{/navList}}\r\n\r\n";
-
-/***/ }),
+/* 12 */,
+/* 13 */,
+/* 14 */,
 /* 15 */,
 /* 16 */,
 /* 17 */,
@@ -1333,22 +1345,31 @@ module.exports = __webpack_require__(46);
 
 __webpack_require__(47);
 //引用common中nav-simple下的index.js
-__webpack_require__(1);
+__webpack_require__(5);
 //引用common中nav下的index.js
-__webpack_require__(7);
+__webpack_require__(8);
 //引用common中header下的index.js
 __webpack_require__(10);
-//引用common中nav-side下的index.js
-var navSide = __webpack_require__(12);
+__webpack_require__(48);
 // require('util/mm.js')就表示引入util/mm.js了，
 //但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
-var _mm = __webpack_require__(0);
+var templateBanner = __webpack_require__(51); 
+var _mm            = __webpack_require__(0);
 
-navSide.init({
-	name : 'order-list'
+$(function() {
+	//渲染banner的Html
+	var bannerHtml = _mm.renderHtml(templateBanner);
+	$('.banner-con').html(bannerHtml);
+	//初始化banner
+    var $slider    =  $('.banner').unslider({
+    	dots: true
+    });
+    // 前一张和后一张操作的事件绑定
+    $('.banner-con .banner-arrow').click(function(){
+    	var forward = $(this).hasClass('prev') ? 'prev' : 'next';
+    	$slider.data('unslider')[forward]();
+    });
 });
-
-
 
 
 /***/ }),
@@ -1357,5 +1378,42 @@ navSide.init({
 
 // removed by extract-text-webpack-plugin
 
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-02-05  21：57
+ * @Last modified time : 2019-02-05  21：57
+ */
+
+
+
+
+__webpack_require__(49);
+__webpack_require__(50);
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports) {
+
+window.console&&console.warn("This version of Unslider is due to be deprecated by December 1. Please visit unslider.com for details on how to upgrade."),function(t,s){if(!t)return s;var i=function(){this.el=s,this.items=s,this.sizes=[],this.max=[0,0],this.current=0,this.interval=s,this.opts={speed:500,delay:3e3,complete:s,keys:!s,dots:s,fluid:s};var i=this;this.init=function(s,i){return this.el=s,this.ul=s.children("ul"),this.max=[s.outerWidth(),s.outerHeight()],this.items=this.ul.children("li").each(this.calculate),this.opts=t.extend(this.opts,i),this.setup(),this},this.calculate=function(s){var e=t(this),n=e.outerWidth(),h=e.outerHeight();i.sizes[s]=[n,h],n>i.max[0]&&(i.max[0]=n),h>i.max[1]&&(i.max[1]=h)},this.setup=function(){if(this.el.css({overflow:"hidden",width:i.max[0],height:this.items.first().outerHeight()}),this.ul.css({width:100*this.items.length+"%",position:"relative"}),this.items.css("width",100/this.items.length+"%"),this.opts.delay!==s&&(this.start(),this.el.hover(this.stop,this.start)),this.opts.keys&&t(document).keydown(this.keys),this.opts.dots&&this.dots(),this.opts.fluid){var e=function(){i.el.css("width",Math.min(Math.round(i.el.outerWidth()/i.el.parent().outerWidth()*100),100)+"%")};e(),t(window).resize(e)}this.opts.arrows&&this.el.parent().append('<p class="arrows"><span class="prev">芒鈥犅�</span><span class="next">芒鈥犫€�</span></p>').find(".arrows span").click(function(){t.isFunction(i[this.className])&&i[this.className]()}),t.event.swipe&&this.el.on("swipeleft",i.prev).on("swiperight",i.next)},this.move=function(s,e){this.items.eq(s).length||(s=0),0>s&&(s=this.items.length-1);var n=this.items.eq(s),h={height:n.outerHeight()},o=e?5:this.opts.speed;this.ul.is(":animated")||(i.el.find(".dot:eq("+s+")").addClass("active").siblings().removeClass("active"),this.el.animate(h,o)&&this.ul.animate(t.extend({left:"-"+s+"00%"},h),o,function(){i.current=s,t.isFunction(i.opts.complete)&&!e&&i.opts.complete(i.el)}))},this.start=function(){i.interval=setInterval(function(){i.move(i.current+1)},i.opts.delay)},this.stop=function(){return i.interval=clearInterval(i.interval),i},this.keys=function(s){var e=s.which,n={37:i.prev,39:i.next,27:i.stop};t.isFunction(n[e])&&n[e]()},this.next=function(){return i.stop().move(i.current+1)},this.prev=function(){return i.stop().move(i.current-1)},this.dots=function(){var s='<ol class="dots">';t.each(this.items,function(t){s+='<li class="dot'+(1>t?" active":"")+'">'+(t+1)+"</li>"}),s+="</ol>",this.el.addClass("has-dots").append(s).find(".dot").click(function(){i.move(t(this).index())})}};t.fn.unslider=function(s){var e=this.length;return this.each(function(n){var h=t(this),o=(new i).init(h,s);h.data("unslider"+(e>1?"-"+(n+1):""),o)})}}(window.jQuery,!1);
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"banner\">\r\n    <ul>\r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=301\" />\r\n           </a>\r\n        </li>\r\n        \r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=251\" />\r\n           </a>\r\n        </li>\r\n        \r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=480\" />\r\n           </a>\r\n        </li>\r\n        \r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=362\" />\r\n           </a>\r\n        </li>\r\n        \r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=142\" />\r\n           </a>\r\n        </li>\r\n    </ul>\r\n    <div class=\"banner-arrow prev\">\r\n        <i class=\"fa fa-angle-left\"></i>\r\n    </div>\r\n    <div class=\"banner-arrow next\">\r\n        <i class=\"fa fa-angle-right\"></i>\r\n    </div>\r\n</div>";
+
 /***/ })
-],[45]);
+/******/ ]);

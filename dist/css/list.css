@@ -1,0 +1,152 @@
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  23：01
+ * @Last modified time : 2019-1-14  23：01
+ * 
+ */
+
+ .nav{
+ 	background:#eee;
+ 	height:30px;
+ 	line-height:30px;
+ }
+/*用户部分*/
+.nav .user{
+	float:left;
+}
+.nav .user.login{
+	display: none;
+	float:left;
+}
+.nav .user .link{
+	margin-right:5px;
+}
+/*导航链接部分*/
+.nav .nav-list{
+	float:right;
+}
+.nav .nav-list .nav-item{
+	display:inline-block;
+	margin-left:5px;
+}
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-16  00：45
+ * @Last modified time : 2019-1-16  00：45
+ * 
+ */
+/* 通用头部导航 */
+
+.header .logo{
+	position: absolute;
+	left: 60px;
+	top: 34px;
+	display: block;
+	font-size: 36px;
+	color: #C60023;
+	font-weight: bold;
+	text-decoration: none;
+}
+.header .search-con{
+	padding: 40px 0 30px 250px;
+}
+.header .search-con .search-input{
+	width: 550px;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 10px;
+	font-size: 15px;
+	border: 2px solid #C60023;
+	outline: none;
+}
+.header .search-con .search-btn{
+	position: absolute;
+	height:44px;
+	width: 80px;
+}
+
+/* 面包屑导航 */
+.crumb{
+	margin-bottom: 15px;
+	height: 50px;
+	line-height: 50px;
+	background: #eee;
+	color: #888;
+	font-size: 14px;
+	border-top: 2px solid #C60023;
+}
+/*
+ * @autor：xiangzi
+ * @Date: 2019-02-06  11：11
+ * @Last modified time : 2019-02-06  11：11
+ */
+
+.sort-con{
+	overflow: auto;
+}
+.sort-con .sort-item{
+	float: left;
+	display: inline-block;
+	position: relative;
+	padding: 0 8px;
+	height: 24px;
+	line-height: 24px;
+	border: 1px solid #ccc;
+	margin-right: -1px;
+	background: #fff;
+	color: #333;
+	cursor: pointer;
+}
+.sort-con .sort-item.active{
+	background: #C60023;
+	border: 1px solid #C60023;
+	color: #fff;
+}
+.sort-con .sort-item .fa-sort-desc{
+	position: absolute;
+	top: 8px;
+	right: 8px;
+}
+.sort-con .sort-item.asc .fa-sort-desc{
+	opacity: .6;
+}
+.sort-con .sort-item.desc .fa-sort-asc{
+	opacity: .6;
+}
+
+/* 列表 */
+.p-list-con{
+	margin-top: 15px;
+	margin-right: -20px;
+	overflow: hidden;
+}
+.p-list-con .p-item{
+	position: relative;
+	width: 180px;
+	float: left;
+	padding: 10px;
+	margin: 0 20px 20px 0;
+	background: #fff;
+}
+.p-list-con .p-item .p-img-con{
+	width: 180px;
+	height: 200px;
+}
+.p-list-con .p-item .p-img-con .p-img{
+	width: 100%;
+	height: 100%;
+}
+.p-list-con .p-item .p-price-con .p-price{
+	font-size: 16px;
+	color: #e7380d;
+}
+.p-list-con .p-item .p-name-con{
+	height: 40px;
+	overflow: hidden;
+}
+.p-list-con .p-item .p-name-con .p-name{
+	height: 20px;
+	margin-bottom: 10px;
+	color: #666;
+	text-decoration: none;
+}

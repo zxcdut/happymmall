@@ -74,7 +74,7 @@ var page = {
 			msg    : '',
 		};
 		// 验证原密码是否为空
-		if(!_mm.validate(userInfo.password,'require')){
+		if(!_mm.validate(userInfo.password,'required')){
 			result.msg = '原密码不能为空';
 			return result;
 		}
