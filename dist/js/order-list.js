@@ -1220,35 +1220,13 @@ module.exports = _cart;
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
- */
-
-
-
-__webpack_require__(7);
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
  * @Date: 2019-1-14  23：32
  * @Last modified time : 2019-1-14  23：32
  */
 
 
 
-__webpack_require__(9);
+__webpack_require__(7);
 var _mm   = __webpack_require__(0);
 var _user = __webpack_require__(1);
 var _cart = __webpack_require__(5);
@@ -1301,13 +1279,13 @@ module.exports = nav.init();
 
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1319,7 +1297,7 @@ module.exports = nav.init();
 
 
 
-__webpack_require__(11);
+__webpack_require__(9);
 var _mm   = __webpack_require__(0);
 console.log(_mm.getUrlParam('keyword'));
 //通用页面头部
@@ -1364,6 +1342,28 @@ var header   = {
 };
 //模块输出的时候初始化一下header对象，因为没有地方会调用这个搜索所以就不用输出啦！
 header.init();
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
+ */
+
+
+
+__webpack_require__(11);
 
 
 /***/ }),
@@ -1440,8 +1440,81 @@ module.exports = navSide;
 module.exports = "{{#navList}}\r\n{{#isActive}}\r\n<li class=\"nav-item active\">\r\n{{/isActive}}\r\n{{^isActive}}\r\n<li class=\"nav-item\">\r\n{{/isActive}}\r\n\t\t<a class=\"link\" href=\"{{href}}\">{{desc}}</a>\r\n</li>\r\n{{/navList}}\r\n\r\n";
 
 /***/ }),
-/* 15 */,
-/* 16 */
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-02-13  22：13
+ * @Last modified time : 2019-02-13  22：13
+ */
+
+
+
+
+var _mm   = __webpack_require__(0);
+
+var _order = {
+	// 获取商品列表
+	getProductList : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/order/get_order_cart_product.do'),
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 创建订单
+	createOrder : function(orderInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/order/create.do'),
+			data     : orderInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取订单列表
+	getOrderList : function(listParam,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/order/list.do'),
+			data     : listParam,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取订单详情
+	getOrderDetail : function(orderNumber,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/order/detail.do'),
+			data     : {
+			   orderNo : orderNumber	
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消订单接口
+	cancelOrder : function(orderNumber,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/order/cancel.do'),
+			data     : {
+			   orderNo : orderNumber	
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	}
+};
+module.exports = _order;
+
+/***/ }),
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1453,9 +1526,9 @@ module.exports = "{{#navList}}\r\n{{#isActive}}\r\n<li class=\"nav-item active\"
 
 
 
-__webpack_require__(17);
+__webpack_require__(18);
 var _mm                = __webpack_require__(0);
-var templatePagination = __webpack_require__(18);
+var templatePagination = __webpack_require__(19);
 
 var Pagination = function(){
 	var _this = this;
@@ -1520,65 +1593,16 @@ module.exports = Pagination;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = "this is here";
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-02-13  22：13
- * @Last modified time : 2019-02-13  22：13
- */
-
-
-
-
-var _mm   = __webpack_require__(0);
-
-var _order = {
-	// 获取商品列表
-	getProductList : function(resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/order/get_order_cart_product.do'),
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 创建订单
-	createOrder : function(orderInfo,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/order/create.do'),
-			data     : orderInfo,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	},
-	// 获取订单列表
-	getOrderList : function(listParam,resolve,reject){
-		_mm.request({
-			url      : _mm.getServerUrl('/order/list.do'),
-			data     : listParam,
-			method   : 'POST',
-			success  : resolve,
-			error    : reject
-		});
-	}
-};
-module.exports = _order;
 
 /***/ }),
 /* 20 */,
@@ -1659,18 +1683,18 @@ module.exports = __webpack_require__(78);
 
 __webpack_require__(79);
 //引用common中nav-simple下的index.js
-__webpack_require__(6);
-//引用common中nav下的index.js
-__webpack_require__(8);
-//引用common中header下的index.js
 __webpack_require__(10);
+//引用common中nav下的index.js
+__webpack_require__(6);
+//引用common中header下的index.js
+__webpack_require__(8);
 //引用common中nav-side下的index.js
 var navSide       = __webpack_require__(12);
 // require('util/mm.js')就表示引入util/mm.js了，
 //但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
 var _mm            = __webpack_require__(0);
-var _order         = __webpack_require__(19);
-var Pagination     = __webpack_require__(16);
+var _order         = __webpack_require__(15);
+var Pagination     = __webpack_require__(17);
 var templateIndex  = __webpack_require__(80);
 
 // 订单列表页的逻辑部分
@@ -1745,7 +1769,7 @@ $(function(){
 /* 80 */
 /***/ (function(module, exports) {
 
-module.exports = "<table class=\"order-list-table header\">\r\n\t<tr>\r\n\t\t<th class=\"cell cell-img\">&nbsp;</th>\r\n\t\t<th class=\"cell cell-info\">商品信息</th>\r\n\t\t<th class=\"cell cell-price\">单价</th>\r\n\t\t<th class=\"cell cell-count\">数量</th>\r\n\t\t<th class=\"cell cell-total\">小计</th>\r\n\t</tr>\r\n</table>\r\n{{#list}}\r\n<table class=\"order-list-table order-item\">\r\n\t<tr class=\"order-info\">\r\n\t\t<td colspan=\"5\">\r\n\t\t\t<span class=\"order-text\">\r\n\t\t\t\t<span>订单号：</span>\r\n\t\t\t\t<a target=\"_blank\" class=\"link order-num\" href=\"./order-detail.html?orderNubmer={{orderNo}}\">{{orderNo}}</a>\r\n\t\t\t</span>\r\n\t\t\t<span class=\"order-text\">{{createTime}}</span>\r\n\t\t\t<span class=\"order-text\">收件人：{{receiverName}}</span>\r\n\t\t\t<span class=\"order-text\">订单状态：{{statusDesc}}</span>\r\n\t\t\t<span class=\"order-text\"><span>订单总价：</span><span class=\"order-total\">￥{{payment}}</span></span>\r\n\t\t\t<a target=\"_blank\" class=\"link order-detail\" href=\"./order-detail.html?orderNubmer={{orderNo}}\">查看详情></a>\r\n\t\t</td>\r\n\t</tr>\r\n\t{{#orderItemVoList}}\r\n\t<tr>\r\n\t\t<td class=\"cell cell-img\">\r\n\t\t\t<a target=\"_blank\" href=\"./detail.html?productId={{productId}}\">\r\n\t\t\t   <img class=\"p-img\" src=\"{{imageHost}}{{productImage}}\" alt=\"{{productName}}\"/>\r\n\t\t    </a>\r\n\t\t</td>\r\n\t\t<td class=\"cell cell-info\">\r\n\t\t\t<a class=\"link\" target=\"_blank\" href=\"./detail.html?productId={{productId}}\">\r\n\t\t\t\t{{productName}}\r\n\t\t\t</a>\r\n\t\t</td>\r\n\t\t<td class=\"cell cell-price\">￥{{currentUnitPrice}}</td>\r\n\t\t<td class=\"cell cell-count\">{{quantity}}</td>\r\n\t\t<td class=\"cell cell-total\">￥{{totalPrice}}</td>\r\n\t</tr>\r\n\t{{/orderItemVoList}}\r\n</table>\r\n{{/list}}\r\n{{^list}}\r\n<p class=\"err-tip\">您暂时还没有订单</p>\r\n{{/list}}";
+module.exports = "<table class=\"order-list-table header\">\r\n\t<tr>\r\n\t\t<th class=\"cell cell-img\">&nbsp;</th>\r\n\t\t<th class=\"cell cell-info\">商品信息</th>\r\n\t\t<th class=\"cell cell-price\">单价</th>\r\n\t\t<th class=\"cell cell-count\">数量</th>\r\n\t\t<th class=\"cell cell-total\">小计</th>\r\n\t</tr>\r\n</table>\r\n{{#list}}\r\n<table class=\"order-list-table order-item\">\r\n\t<tr class=\"order-info\">\r\n\t\t<td colspan=\"5\">\r\n\t\t\t<span class=\"order-text\">\r\n\t\t\t\t<span>订单号：</span>\r\n\t\t\t\t<a target=\"_blank\" class=\"link order-num\" href=\"./order-detail.html?orderNumber={{orderNo}}\">{{orderNo}}</a>\r\n\t\t\t</span>\r\n\t\t\t<span class=\"order-text\">{{createTime}}</span>\r\n\t\t\t<span class=\"order-text\">收件人：{{receiverName}}</span>\r\n\t\t\t<span class=\"order-text\">订单状态：{{statusDesc}}</span>\r\n\t\t\t<span class=\"order-text\"><span>订单总价：</span><span class=\"order-total\">￥{{payment}}</span></span>\r\n\t\t\t<a target=\"_blank\" class=\"link order-detail\" href=\"./order-detail.html?orderNumber={{orderNo}}\">查看详情></a>\r\n\t\t</td>\r\n\t</tr>\r\n\t{{#orderItemVoList}}\r\n\t<tr>\r\n\t\t<td class=\"cell cell-img\">\r\n\t\t\t<a target=\"_blank\" href=\"./detail.html?productId={{productId}}\">\r\n\t\t\t   <img class=\"p-img\" src=\"{{imageHost}}{{productImage}}\" alt=\"{{productName}}\"/>\r\n\t\t    </a>\r\n\t\t</td>\r\n\t\t<td class=\"cell cell-info\">\r\n\t\t\t<a class=\"link\" target=\"_blank\" href=\"./detail.html?productId={{productId}}\">\r\n\t\t\t\t{{productName}}\r\n\t\t\t</a>\r\n\t\t</td>\r\n\t\t<td class=\"cell cell-price\">￥{{currentUnitPrice}}</td>\r\n\t\t<td class=\"cell cell-count\">{{quantity}}</td>\r\n\t\t<td class=\"cell cell-total\">￥{{totalPrice}}</td>\r\n\t</tr>\r\n\t{{/orderItemVoList}}\r\n</table>\r\n{{/list}}\r\n{{^list}}\r\n<p class=\"err-tip\">您暂时还没有订单</p>\r\n{{/list}}";
 
 /***/ })
 /******/ ]);

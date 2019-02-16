@@ -1214,9 +1214,7 @@ var _cart = {
 module.exports = _cart;
 
 /***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1228,7 +1226,7 @@ module.exports = _cart;
 
 
 
-__webpack_require__(9);
+__webpack_require__(7);
 var _mm   = __webpack_require__(0);
 var _user = __webpack_require__(1);
 var _cart = __webpack_require__(5);
@@ -1281,13 +1279,13 @@ module.exports = nav.init();
 
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1299,7 +1297,7 @@ module.exports = nav.init();
 
 
 
-__webpack_require__(11);
+__webpack_require__(9);
 var _mm   = __webpack_require__(0);
 console.log(_mm.getUrlParam('keyword'));
 //通用页面头部
@@ -1347,16 +1345,19 @@ header.init();
 
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
+/* 10 */,
+/* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1398,7 +1399,7 @@ var _product = {
 module.exports = _product;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1410,9 +1411,9 @@ module.exports = _product;
 
 
 
-__webpack_require__(17);
+__webpack_require__(18);
 var _mm                = __webpack_require__(0);
-var templatePagination = __webpack_require__(18);
+var templatePagination = __webpack_require__(19);
 
 var Pagination = function(){
 	var _this = this;
@@ -1477,19 +1478,18 @@ module.exports = Pagination;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = "this is here";
 
 /***/ }),
-/* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
@@ -1546,11 +1546,11 @@ module.exports = __webpack_require__(58);
 
 
 __webpack_require__(59);
+__webpack_require__(6);
 __webpack_require__(8);
-__webpack_require__(10);
 var _mm           = __webpack_require__(0);
-var _product      = __webpack_require__(15);
-var Pagination    = __webpack_require__(16);
+var _product      = __webpack_require__(16);
+var Pagination    = __webpack_require__(17);
 var templateIndex = __webpack_require__(60);
 
 var page = {

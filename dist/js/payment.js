@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 98);
+/******/ 	return __webpack_require__(__webpack_require__.s = 85);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -299,107 +299,6 @@ var _user = {
 	}
 }
 module.exports = _user;
-
-/***/ }),
-
-/***/ 10:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
- */
-
-
-
-__webpack_require__(11);
-
-
-/***/ }),
-
-/***/ 100:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 11:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 12:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-17  01：19
- * @Last modified time : 2019-1-17  01：19
- */
-
-
-
-__webpack_require__(13);
-var _mm           = __webpack_require__(0);
-var templateIndex = __webpack_require__(14);
-console.log(3333);
-// 侧边导航
-var navSide   ={
-	option : {
-		//name是当前页面名称
-		name : '',
-		navList : [
-		     {name : 'user-center',desc : '个人中心',href : './user-center.html',active : true},
-		     {name : 'order-list',desc : '我的订单',href : './order-list.html'},
-		     {name : 'user-pass-update',desc : '修改密码',href : './user-pass-update.html'},
-		     {name : 'about',desc : '关于MMall',href : './about.html'}
-		]
-	},
-	init : function(option){
-		//合并选项
-		$.extend(this.option,option);
-		this.renderNav();
-	},
-	//渲染导航菜单
-	renderNav : function(){
-		 for (var i = 0,iLength = this.option.navList.length; i < iLength;i++) {
-		 	if(this.option.navList[i].name === this.option.name){
-		 		this.option.navList[i].isActive = true;
-		 	}
-		 };
-		 //渲染list数据
-		 var navHtml = _mm.renderHtml(templateIndex,{
-		 	 navList : this.option.navList
-		 });
-		 //把html放入容器
-		 console.log(navHtml);
-		 $('.nav-side').html(navHtml);
-	}
-};
-
-//模块输出的时候初始化一下nav对象
-module.exports = navSide;
-
-
-/***/ }),
-
-/***/ 13:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 14:
-/***/ (function(module, exports) {
-
-module.exports = "{{#navList}}\r\n{{#isActive}}\r\n<li class=\"nav-item active\">\r\n{{/isActive}}\r\n{{^isActive}}\r\n<li class=\"nav-item\">\r\n{{/isActive}}\r\n\t\t<a class=\"link\" href=\"{{href}}\">{{desc}}</a>\r\n</li>\r\n{{/navList}}\r\n\r\n";
 
 /***/ }),
 
@@ -1456,125 +1355,91 @@ header.init();
 
 /***/ }),
 
-/***/ 9:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 98:
+/***/ 85:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(99);
+module.exports = __webpack_require__(86);
 
 
 /***/ }),
 
-/***/ 99:
+/***/ 86:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-2-3  19：49
- * @Last modified time : 2019-2-3  19：49
+ * @Date: 2019-2-16  18：13
+ * @Last modified time : 2019-2-16  18：13
  * 
  */
 
 
-__webpack_require__(100);
-//引用common中nav-simple下的index.js
-__webpack_require__(10);
+__webpack_require__(87);
 //引用common中nav下的index.js
 __webpack_require__(6);
 //引用common中header下的index.js
 __webpack_require__(8);
-//引用common中nav-side下的index.js
-var navSide       = __webpack_require__(12);
 // require('util/mm.js')就表示引入util/mm.js了，
 //但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
-var _mm           = __webpack_require__(0);
-var _user         = __webpack_require__(1);
+var _mm              = __webpack_require__(0);
+var _payment         = __webpack_require__(88);
+var templateIndex    = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./index.string\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
-// 登录页的逻辑部分
+// 订单列表页的逻辑部分
 var page = {
+    data :  {
+    	orderNumber : _mm.getUrlParam('orderNumber')
+    },
 	init      : function(){
 		this.onLoad();
-		this.bindEvent();
 	},
 	onLoad : function(){
-		// 初始化左侧菜单
-		navSide.init({
-			name: 'user-pass-update'
-		});
+		// 加载detail数据
+		this.loadPayment();
 	},
-	bindEvent : function(){
-        var _this = this;
-		$(document).on('click','.btn-submit',function(){
-			//点击提交按钮后的动作
-			var userInfo = {
-				password        : $.trim($('#password').val()),
-				passwordNew     : $.trim($('#password-new').val()),
-				passwordConfirm : $.trim($('#password-confirm').val())
-			};
-			var validateResult = _this.validateForm(userInfo);
-			if(validateResult.status){
-				// 更改用户密码
-				_user.updatePassword({
-					passwordOld : userInfo.password,
-					passwordNew : userInfo.passwordNew
-				},function(res,msg){
-					_mm.successTips(msg);
-				},function(errMsg){
-					_mm.errorTips(errMsg);
-				});
-			}
-			else{
-				_mm.errorTips(validateResult.msg);
-			}
-		});
-	},
-	// 加载用户信息
-	loadUserInfo : function(){
-		var userHtml = '';
-		_user.getUserInfo(function(res){
-			
+	// 加载订单详情
+	loadPayment : function(){
+		var _this         = this;
+		var orderDetailHtml = '';
+		var $content      = $('.content');
+		$content.html('<div class="loading"></div>');
+		_order.getOrderDetail(this.data.orderNumber,function(res){
+			// 先对后端接口返回的res数据做处理
+			_this.dataFilter(res);
+			//渲染订单详情的html
+			orderDetailHtml = _mm.renderHtml(templateIndex,res);
+			$content.html(orderDetailHtml);
 		},function(errMsg){
-			_mm.errorTips(errMsg);
+			$content.html('<p class="err-tip">' + errMsg + '</p>');
 		});
-	},
-	// 验证字段信息
-	validateForm : function(userInfo){
-		var result = {
-			status : false,
-			msg    : '',
-		};
-		// 验证原密码是否为空
-		if(!_mm.validate(userInfo.password,'required')){
-			result.msg = '原密码不能为空';
-			return result;
-		}
-		// 验证新密码长度
-		if(!userInfo.passwordNew || userInfo.passwordNew.length < 6){
-			result.msg = '新密码长度不能少于6位';
-			return result;
-		}
-		// 验证两次输入的密码是否一致
-		if(userInfo.passwordNew !== userInfo.passwordConfirm){
-			result.msg = '两次输入的密码不一致';
-			return result;
-		}
-		// 通过验证，返回正确提示
-		result.status = true;
-		result.msg    = '验证通过';
-		return result;
 	}
 };
 $(function(){
 	page.init();
 });
 
+
+/***/ }),
+
+/***/ 87:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 88:
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ 9:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 

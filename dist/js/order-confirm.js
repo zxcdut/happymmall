@@ -302,75 +302,7 @@ module.exports = _user;
 
 /***/ }),
 
-/***/ 10:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-16  00：31
- * @Last modified time : 2019-1-16  00：31
- */
-
-
-
-__webpack_require__(11);
-var _mm   = __webpack_require__(0);
-console.log(_mm.getUrlParam('keyword'));
-//通用页面头部
-var header   = {
-	init         : function(){
-		this.onLoad();
-		this.bindEvent();
-	},
-	//将url中的搜索参数回填至搜索框中
-	onLoad : function(){
-		var keyword = _mm.getUrlParam('keyword');
-		if(keyword){
-			$('#search-input').val(keyword);
-		};
-	},
-	// 搜索按钮的点击事件，点击则进行搜索提交
-	bindEvent    : function(){
-		var _this = this;
-		$('#search-btn').click(function(){
-			_this.searchSubmit();
-		});
-		// 按下回车按钮，做搜索提交
-		$('#search-input').keyup(function(e){
-			// 13是回车键的keyCode
-			if(e.keyCode === 13){
-				_this.searchSubmit();
-			}
-		});
-	},
-	//搜索的提交，这里就是调到list页，并且把搜索参数传过去，剩下的逻辑由list页来处理。
-	searchSubmit : function(){
-		var keyword = $.trim($('#search-input').val());
-		// 如果提交的时候有keyword，正常跳转到list页
-		if(keyword){
-			window.location.href = './list.html?keyword=' + keyword;
-		}
-		// 如果keyword为空，则返回首页
-		else{
-			_mm.goHome();
-		}
-	}
-};
-//模块输出的时候初始化一下header对象，因为没有地方会调用这个搜索所以就不用输出啦！
-header.init();
-
-
-/***/ }),
-
-/***/ 11:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 19:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -410,6 +342,30 @@ var _order = {
 		_mm.request({
 			url      : _mm.getServerUrl('/order/list.do'),
 			data     : listParam,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取订单详情
+	getOrderDetail : function(orderNumber,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/order/detail.do'),
+			data     : {
+			   orderNo : orderNumber	
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消订单接口
+	cancelOrder : function(orderNumber,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/order/cancel.do'),
+			data     : {
+			   orderNo : orderNumber	
+			},
 			method   : 'POST',
 			success  : resolve,
 			error    : reject
@@ -1416,11 +1372,84 @@ module.exports = _cart;
 
 /***/ }),
 
+/***/ 6:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  23：32
+ * @Last modified time : 2019-1-14  23：32
+ */
+
+
+
+__webpack_require__(7);
+var _mm   = __webpack_require__(0);
+var _user = __webpack_require__(1);
+var _cart = __webpack_require__(5);
+var nav   = {
+	init         : function(){
+		this.bindEvent();
+		this.loadUserInfo();
+		this.loadCartCount();
+		//很关键的一步，这样输出的时候才是nav对象本身
+		return this;      
+	},
+	bindEvent    : function(){
+		// 登录点击事件
+		$('.js-login').click(function(){
+			_mm.doLogin();
+		});
+		// 注册点击事件
+		$('.js-register').click(function(){
+			window.location.href = './user-register.html' 
+		});
+		// 退出点击事件
+		$('.js-logout').click(function(){
+			_user.logout(function(res){
+				window.location.reload();
+			},function(errMsg){
+				_mm.errorTips(errMsg);
+			});
+		});
+	},
+	//加载用户信息
+	loadUserInfo : function(){
+		_user.checkLogin(function(res){
+				$('.user.not-login').hide().siblings('.user.login').show()
+				     .find('.username').text(res.username);
+			},function(errMsg){
+				
+		});
+	},
+	//加载购物车数量
+	loadCartCount : function(){
+		_cart.getCartCount(function(res){
+			$('.nav .cart-count').text(res || 0);
+		},function(errMsg){
+			$('.nav .cart-count').text(0);
+		});
+	}
+};
+//模块输出的时候初始化一下nav对象
+module.exports = nav.init();
+
+
+/***/ }),
+
 /***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(70);
 
+
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -1436,10 +1465,10 @@ module.exports = __webpack_require__(70);
 
 
 __webpack_require__(71);
-__webpack_require__(10);
 __webpack_require__(8);
+__webpack_require__(6);
 var _mm             = __webpack_require__(0);
-var _order          = __webpack_require__(19);
+var _order          = __webpack_require__(15);
 var _address        = __webpack_require__(22);
 var templateAddress = __webpack_require__(72);
 var templateProduct = __webpack_require__(73);
@@ -1838,62 +1867,57 @@ module.exports = "<div class=\"modal close\">\r\n\t<div class=\"modal-container\
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  23：32
- * @Last modified time : 2019-1-14  23：32
+ * @Date: 2019-1-16  00：31
+ * @Last modified time : 2019-1-16  00：31
  */
 
 
 
 __webpack_require__(9);
 var _mm   = __webpack_require__(0);
-var _user = __webpack_require__(1);
-var _cart = __webpack_require__(5);
-var nav   = {
+console.log(_mm.getUrlParam('keyword'));
+//通用页面头部
+var header   = {
 	init         : function(){
+		this.onLoad();
 		this.bindEvent();
-		this.loadUserInfo();
-		this.loadCartCount();
-		//很关键的一步，这样输出的时候才是nav对象本身
-		return this;      
 	},
+	//将url中的搜索参数回填至搜索框中
+	onLoad : function(){
+		var keyword = _mm.getUrlParam('keyword');
+		if(keyword){
+			$('#search-input').val(keyword);
+		};
+	},
+	// 搜索按钮的点击事件，点击则进行搜索提交
 	bindEvent    : function(){
-		// 登录点击事件
-		$('.js-login').click(function(){
-			_mm.doLogin();
+		var _this = this;
+		$('#search-btn').click(function(){
+			_this.searchSubmit();
 		});
-		// 注册点击事件
-		$('.js-register').click(function(){
-			window.location.href = './user-register.html' 
-		});
-		// 退出点击事件
-		$('.js-logout').click(function(){
-			_user.logout(function(res){
-				window.location.reload();
-			},function(errMsg){
-				_mm.errorTips(errMsg);
-			});
+		// 按下回车按钮，做搜索提交
+		$('#search-input').keyup(function(e){
+			// 13是回车键的keyCode
+			if(e.keyCode === 13){
+				_this.searchSubmit();
+			}
 		});
 	},
-	//加载用户信息
-	loadUserInfo : function(){
-		_user.checkLogin(function(res){
-				$('.user.not-login').hide().siblings('.user.login').show()
-				     .find('.username').text(res.username);
-			},function(errMsg){
-				
-		});
-	},
-	//加载购物车数量
-	loadCartCount : function(){
-		_cart.getCartCount(function(res){
-			$('.nav .cart-count').text(res || 0);
-		},function(errMsg){
-			$('.nav .cart-count').text(0);
-		});
+	//搜索的提交，这里就是调到list页，并且把搜索参数传过去，剩下的逻辑由list页来处理。
+	searchSubmit : function(){
+		var keyword = $.trim($('#search-input').val());
+		// 如果提交的时候有keyword，正常跳转到list页
+		if(keyword){
+			window.location.href = './list.html?keyword=' + keyword;
+		}
+		// 如果keyword为空，则返回首页
+		else{
+			_mm.goHome();
+		}
 	}
 };
-//模块输出的时候初始化一下nav对象
-module.exports = nav.init();
+//模块输出的时候初始化一下header对象，因为没有地方会调用这个搜索所以就不用输出啦！
+header.init();
 
 
 /***/ }),

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 83);
+/******/ 	return __webpack_require__(__webpack_require__.s = 89);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -299,6 +299,30 @@ var _user = {
 	}
 }
 module.exports = _user;
+
+/***/ }),
+
+/***/ 10:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
+ */
+
+
+
+__webpack_require__(11);
+
+
+/***/ }),
+
+/***/ 11:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -1108,39 +1132,15 @@ var Hogan = {};
 
 /***/ }),
 
-/***/ 6:
+/***/ 89:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
- */
-
-
-
-__webpack_require__(7);
+module.exports = __webpack_require__(90);
 
 
 /***/ }),
 
-/***/ 7:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 83:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(84);
-
-
-/***/ }),
-
-/***/ 84:
+/***/ 90:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1152,8 +1152,8 @@ module.exports = __webpack_require__(84);
 
 
 
-__webpack_require__(85);
-__webpack_require__(6);
+__webpack_require__(91);
+__webpack_require__(10);
 var _user = __webpack_require__(1);
 var _mm   = __webpack_require__(0);
 
@@ -1243,7 +1243,7 @@ $(function(){
 
 /***/ }),
 
-/***/ 85:
+/***/ 91:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

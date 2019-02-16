@@ -1220,35 +1220,13 @@ module.exports = _cart;
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
- */
-
-
-
-__webpack_require__(7);
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
  * @Date: 2019-1-14  23：32
  * @Last modified time : 2019-1-14  23：32
  */
 
 
 
-__webpack_require__(9);
+__webpack_require__(7);
 var _mm   = __webpack_require__(0);
 var _user = __webpack_require__(1);
 var _cart = __webpack_require__(5);
@@ -1301,13 +1279,13 @@ module.exports = nav.init();
 
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1319,7 +1297,7 @@ module.exports = nav.init();
 
 
 
-__webpack_require__(11);
+__webpack_require__(9);
 var _mm   = __webpack_require__(0);
 console.log(_mm.getUrlParam('keyword'));
 //通用页面头部
@@ -1364,6 +1342,28 @@ var header   = {
 };
 //模块输出的时候初始化一下header对象，因为没有地方会调用这个搜索所以就不用输出啦！
 header.init();
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
+ */
+
+
+
+__webpack_require__(11);
 
 
 /***/ }),
@@ -1433,11 +1433,11 @@ module.exports = __webpack_require__(51);
 
 __webpack_require__(52);
 //引用common中nav-simple下的index.js
-__webpack_require__(6);
-//引用common中nav下的index.js
-__webpack_require__(8);
-//引用common中header下的index.js
 __webpack_require__(10);
+//引用common中nav下的index.js
+__webpack_require__(6);
+//引用common中header下的index.js
+__webpack_require__(8);
 __webpack_require__(53);
 // require('util/mm.js')就表示引入util/mm.js了，
 //但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
