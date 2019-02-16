@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 79);
+/******/ 	return __webpack_require__(__webpack_require__.s = 99);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -360,6 +360,134 @@ var header   = {
 //模块输出的时候初始化一下header对象，因为没有地方会调用这个搜索所以就不用输出啦！
 header.init();
 
+
+/***/ }),
+
+/***/ 100:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-2-3  19：49
+ * @Last modified time : 2019-2-3  19：49
+ * 
+ */
+
+
+__webpack_require__(101);
+//引用common中nav-simple下的index.js
+__webpack_require__(6);
+//引用common中nav下的index.js
+__webpack_require__(8);
+//引用common中header下的index.js
+__webpack_require__(10);
+//引用common中nav-side下的index.js
+var navSide       = __webpack_require__(12);
+// require('util/mm.js')就表示引入util/mm.js了，
+//但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
+var _mm           = __webpack_require__(0);
+var _user         = __webpack_require__(1);
+var templateIndex = __webpack_require__(102);
+
+// 登录页的逻辑部分
+var page = {
+	init      : function(){
+		this.onLoad();
+		this.bindEvent();
+	},
+	onLoad : function(){
+		// 初始化左侧菜单
+		navSide.init({
+			name: 'user-center'
+		});
+		// 加载用户信息
+		this.loadUserInfo();
+	},
+	bindEvent : function(){
+        var _this = this;
+		$(document).on('click','.btn-submit',function(){
+			//点击提交按钮后的动作
+			var userInfo = {
+				phone    : $.trim($('#phone').val()),
+				email    : $.trim($('#email').val()),
+				question : $.trim($('#question').val()),
+				answer   : $.trim($('#answer').val())
+			};
+			var validateResult = _this.validateForm(userInfo);
+			if(validateResult.status){
+				_user.updateUserInfo(userInfo,function(res,msg){
+					_mm.successTips(msg);
+					window.location.href = './user-center.html';
+				},function(errMsg){
+					_mm.errorTips(errMsg);
+				});
+			}
+			else{
+				_mm.errorTips(validateResult.msg);
+			}
+		});
+	},
+	// 加载用户信息
+	loadUserInfo : function(){
+		var userHtml = '';
+		_user.getUserInfo(function(res){
+			userHtml = _mm.renderHtml(templateIndex,res);
+			$('.panel-body').html(userHtml);
+		},function(errMsg){
+			_mm.errorTips(errMsg);
+		});
+	},
+	// 验证字段信息
+	validateForm : function(userInfo){
+		var result = {
+			status : false,
+			msg    : '',
+		};
+		// 验证手机号
+		if(!_mm.validate(userInfo.phone,'phone')){
+			result.msg = '手机号格式不正确';
+			return result;
+		}
+		// 验证邮箱
+		if(!_mm.validate(userInfo.email,'email')){
+			result.msg = '邮箱格式不正确';
+			return result;
+		}
+		// 验证密码提示问题
+		if(!_mm.validate(userInfo.question,'required')){
+			result.msg = '密码提示问题不能为空';
+			return result;
+		}
+		// 验证密码提示问题答案
+		if(!_mm.validate(userInfo.answer,'required')){
+			result.msg = '密码提示问题答案不能为空';
+			return result;
+		}
+		// 通过验证，返回正确提示
+		result.status = true;
+		result.msg    = '验证通过';
+		return result;
+	}
+};
+$(function(){
+	page.init();
+});
+
+
+/***/ }),
+
+/***/ 101:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 102:
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"user-info\">\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">用户名：</span>\r\n\t\t<span class=\"text\">{{username}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">电 话：</span>\r\n\t\t<input class=\"input\" id=\"phone\" autocomplete=\"off\" value=\"{{phone}}\" />\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">邮 箱：</span>\r\n\t\t<input class=\"input\" id=\"email\" autocomplete=\"off\" value=\"{{email}}\" />\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">问 题：</span>\r\n\t\t<input class=\"input\" id=\"question\" autocomplete=\"off\" value=\"{{question}}\" />\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">答 案：</span>\r\n\t\t<input class=\"input\" id=\"answer\" autocomplete=\"off\" value=\"{{answer}}\" />\r\n\t</div>\r\n\t<span class=\"btn btn-submit\">提交</span>\r\n</div>";
 
 /***/ }),
 
@@ -1252,30 +1380,6 @@ var Hogan = {};
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
- */
-
-
-
-__webpack_require__(6);
-
-
-/***/ }),
-
-/***/ 6:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
  * @Date: 2019-1-15  09：24
  * @Last modified time : 2019-1-15  09：24
  */
@@ -1294,17 +1398,116 @@ var _cart = {
 			success  : resolve,
 			error    : reject
 		});
+	},
+	// 添加到购物车
+	addToCart : function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/add.do'),
+			method   : 'POST',
+			data     : productInfo,
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取购物车列表
+	getCartList : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/list.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 选择购物车商品
+	selectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消选择购物车商品
+	unselectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 全选购物车商品
+	selectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消全选购物车商品
+	unselectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新购物车商品数量
+	updateProduct  :  function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/update.do'),
+			data     : productInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 删除指定商品
+	deleteProduct : function(productIds,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/delete_product.do'),
+			data     : {
+				productIds : productIds
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
 	}
 }
 module.exports = _cart;
 
 /***/ }),
 
-/***/ 79:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(80);
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
+ */
 
+
+
+__webpack_require__(7);
+
+
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -1323,7 +1526,7 @@ module.exports = __webpack_require__(80);
 __webpack_require__(9);
 var _mm   = __webpack_require__(0);
 var _user = __webpack_require__(1);
-var _cart = __webpack_require__(7);
+var _cart = __webpack_require__(5);
 var nav   = {
 	init         : function(){
 		this.bindEvent();
@@ -1362,9 +1565,9 @@ var nav   = {
 	//加载购物车数量
 	loadCartCount : function(){
 		_cart.getCartCount(function(res){
-			$('.nav .cat-count').text(res || 0);
+			$('.nav .cart-count').text(res || 0);
 		},function(errMsg){
-			$('.nav .cat-count').text(0);
+			$('.nav .cart-count').text(0);
 		});
 	}
 };
@@ -1374,138 +1577,18 @@ module.exports = nav.init();
 
 /***/ }),
 
-/***/ 80:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-2-3  19：49
- * @Last modified time : 2019-2-3  19：49
- * 
- */
-
-
-__webpack_require__(81);
-//引用common中nav-simple下的index.js
-__webpack_require__(5);
-//引用common中nav下的index.js
-__webpack_require__(8);
-//引用common中header下的index.js
-__webpack_require__(10);
-//引用common中nav-side下的index.js
-var navSide       = __webpack_require__(12);
-// require('util/mm.js')就表示引入util/mm.js了，
-//但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
-var _mm           = __webpack_require__(0);
-var _user         = __webpack_require__(1);
-var templateIndex = __webpack_require__(82);
-
-// 登录页的逻辑部分
-var page = {
-	init      : function(){
-		this.onLoad();
-		this.bindEvent();
-	},
-	onLoad : function(){
-		// 初始化左侧菜单
-		navSide.init({
-			name: 'user-center'
-		});
-		// 加载用户信息
-		this.loadUserInfo();
-	},
-	bindEvent : function(){
-        var _this = this;
-		$(document).on('click','.btn-submit',function(){
-			//点击提交按钮后的动作
-			var userInfo = {
-				phone    : $.trim($('#phone').val()),
-				email    : $.trim($('#email').val()),
-				question : $.trim($('#question').val()),
-				answer   : $.trim($('#answer').val())
-			};
-			var validateResult = _this.validateForm(userInfo);
-			if(validateResult.status){
-				_user.updateUserInfo(userInfo,function(res,msg){
-					_mm.successTips(msg);
-					window.location.href = './user-center.html';
-				},function(errMsg){
-					_mm.errorTips(errMsg);
-				});
-			}
-			else{
-				_mm.errorTips(validateResult.msg);
-			}
-		});
-	},
-	// 加载用户信息
-	loadUserInfo : function(){
-		var userHtml = '';
-		_user.getUserInfo(function(res){
-			userHtml = _mm.renderHtml(templateIndex,res);
-			$('.panel-body').html(userHtml);
-		},function(errMsg){
-			_mm.errorTips(errMsg);
-		});
-	},
-	// 验证字段信息
-	validateForm : function(userInfo){
-		var result = {
-			status : false,
-			msg    : '',
-		};
-		// 验证手机号
-		if(!_mm.validate(userInfo.phone,'phone')){
-			result.msg = '手机号格式不正确';
-			return result;
-		}
-		// 验证邮箱
-		if(!_mm.validate(userInfo.email,'email')){
-			result.msg = '邮箱格式不正确';
-			return result;
-		}
-		// 验证密码提示问题
-		if(!_mm.validate(userInfo.question,'required')){
-			result.msg = '密码提示问题不能为空';
-			return result;
-		}
-		// 验证密码提示问题答案
-		if(!_mm.validate(userInfo.answer,'required')){
-			result.msg = '密码提示问题答案不能为空';
-			return result;
-		}
-		// 通过验证，返回正确提示
-		result.status = true;
-		result.msg    = '验证通过';
-		return result;
-	}
-};
-$(function(){
-	page.init();
-});
-
-
-/***/ }),
-
-/***/ 81:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 82:
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"user-info\">\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">用户名：</span>\r\n\t\t<span class=\"text\">{{username}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">电 话：</span>\r\n\t\t<input class=\"input\" id=\"phone\" autocomplete=\"off\" value=\"{{phone}}\" />\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">邮 箱：</span>\r\n\t\t<input class=\"input\" id=\"email\" autocomplete=\"off\" value=\"{{email}}\" />\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">问 题：</span>\r\n\t\t<input class=\"input\" id=\"question\" autocomplete=\"off\" value=\"{{question}}\" />\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">答 案：</span>\r\n\t\t<input class=\"input\" id=\"answer\" autocomplete=\"off\" value=\"{{answer}}\" />\r\n\t</div>\r\n\t<span class=\"btn btn-submit\">提交</span>\r\n</div>";
-
-/***/ }),
-
 /***/ 9:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 99:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(100);
+
 
 /***/ })
 

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 50);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1108,28 +1108,6 @@ var Hogan = {};
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
- */
-
-
-
-__webpack_require__(6);
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
  * @Date: 2019-1-15  09：24
  * @Last modified time : 2019-1-15  09：24
  */
@@ -1148,9 +1126,114 @@ var _cart = {
 			success  : resolve,
 			error    : reject
 		});
+	},
+	// 添加到购物车
+	addToCart : function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/add.do'),
+			method   : 'POST',
+			data     : productInfo,
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取购物车列表
+	getCartList : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/list.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 选择购物车商品
+	selectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消选择购物车商品
+	unselectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 全选购物车商品
+	selectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消全选购物车商品
+	unselectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新购物车商品数量
+	updateProduct  :  function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/update.do'),
+			data     : productInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 删除指定商品
+	deleteProduct : function(productIds,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/delete_product.do'),
+			data     : {
+				productIds : productIds
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
 	}
 }
 module.exports = _cart;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
+ */
+
+
+
+__webpack_require__(7);
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 8 */
@@ -1168,7 +1251,7 @@ module.exports = _cart;
 __webpack_require__(9);
 var _mm   = __webpack_require__(0);
 var _user = __webpack_require__(1);
-var _cart = __webpack_require__(7);
+var _cart = __webpack_require__(5);
 var nav   = {
 	init         : function(){
 		this.bindEvent();
@@ -1207,9 +1290,9 @@ var nav   = {
 	//加载购物车数量
 	loadCartCount : function(){
 		_cart.getCartCount(function(res){
-			$('.nav .cat-count').text(res || 0);
+			$('.nav .cart-count').text(res || 0);
 		},function(errMsg){
-			$('.nav .cat-count').text(0);
+			$('.nav .cart-count').text(0);
 		});
 	}
 };
@@ -1323,14 +1406,19 @@ header.init();
 /* 42 */,
 /* 43 */,
 /* 44 */,
-/* 45 */
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(46);
+module.exports = __webpack_require__(51);
 
 
 /***/ }),
-/* 46 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1343,17 +1431,17 @@ module.exports = __webpack_require__(46);
 
 
 
-__webpack_require__(47);
+__webpack_require__(52);
 //引用common中nav-simple下的index.js
-__webpack_require__(5);
+__webpack_require__(6);
 //引用common中nav下的index.js
 __webpack_require__(8);
 //引用common中header下的index.js
 __webpack_require__(10);
-__webpack_require__(48);
+__webpack_require__(53);
 // require('util/mm.js')就表示引入util/mm.js了，
 //但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
-var templateBanner = __webpack_require__(51); 
+var templateBanner = __webpack_require__(56); 
 var _mm            = __webpack_require__(0);
 
 $(function() {
@@ -1373,13 +1461,13 @@ $(function() {
 
 
 /***/ }),
-/* 47 */
+/* 52 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 48 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1392,25 +1480,25 @@ $(function() {
 
 
 
-__webpack_require__(49);
-__webpack_require__(50);
+__webpack_require__(54);
+__webpack_require__(55);
 
 
 /***/ }),
-/* 49 */
+/* 54 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 50 */
+/* 55 */
 /***/ (function(module, exports) {
 
 window.console&&console.warn("This version of Unslider is due to be deprecated by December 1. Please visit unslider.com for details on how to upgrade."),function(t,s){if(!t)return s;var i=function(){this.el=s,this.items=s,this.sizes=[],this.max=[0,0],this.current=0,this.interval=s,this.opts={speed:500,delay:3e3,complete:s,keys:!s,dots:s,fluid:s};var i=this;this.init=function(s,i){return this.el=s,this.ul=s.children("ul"),this.max=[s.outerWidth(),s.outerHeight()],this.items=this.ul.children("li").each(this.calculate),this.opts=t.extend(this.opts,i),this.setup(),this},this.calculate=function(s){var e=t(this),n=e.outerWidth(),h=e.outerHeight();i.sizes[s]=[n,h],n>i.max[0]&&(i.max[0]=n),h>i.max[1]&&(i.max[1]=h)},this.setup=function(){if(this.el.css({overflow:"hidden",width:i.max[0],height:this.items.first().outerHeight()}),this.ul.css({width:100*this.items.length+"%",position:"relative"}),this.items.css("width",100/this.items.length+"%"),this.opts.delay!==s&&(this.start(),this.el.hover(this.stop,this.start)),this.opts.keys&&t(document).keydown(this.keys),this.opts.dots&&this.dots(),this.opts.fluid){var e=function(){i.el.css("width",Math.min(Math.round(i.el.outerWidth()/i.el.parent().outerWidth()*100),100)+"%")};e(),t(window).resize(e)}this.opts.arrows&&this.el.parent().append('<p class="arrows"><span class="prev">芒鈥犅�</span><span class="next">芒鈥犫€�</span></p>').find(".arrows span").click(function(){t.isFunction(i[this.className])&&i[this.className]()}),t.event.swipe&&this.el.on("swipeleft",i.prev).on("swiperight",i.next)},this.move=function(s,e){this.items.eq(s).length||(s=0),0>s&&(s=this.items.length-1);var n=this.items.eq(s),h={height:n.outerHeight()},o=e?5:this.opts.speed;this.ul.is(":animated")||(i.el.find(".dot:eq("+s+")").addClass("active").siblings().removeClass("active"),this.el.animate(h,o)&&this.ul.animate(t.extend({left:"-"+s+"00%"},h),o,function(){i.current=s,t.isFunction(i.opts.complete)&&!e&&i.opts.complete(i.el)}))},this.start=function(){i.interval=setInterval(function(){i.move(i.current+1)},i.opts.delay)},this.stop=function(){return i.interval=clearInterval(i.interval),i},this.keys=function(s){var e=s.which,n={37:i.prev,39:i.next,27:i.stop};t.isFunction(n[e])&&n[e]()},this.next=function(){return i.stop().move(i.current+1)},this.prev=function(){return i.stop().move(i.current-1)},this.dots=function(){var s='<ol class="dots">';t.each(this.items,function(t){s+='<li class="dot'+(1>t?" active":"")+'">'+(t+1)+"</li>"}),s+="</ol>",this.el.addClass("has-dots").append(s).find(".dot").click(function(){i.move(t(this).index())})}};t.fn.unslider=function(s){var e=this.length;return this.each(function(n){var h=t(this),o=(new i).init(h,s);h.data("unslider"+(e>1?"-"+(n+1):""),o)})}}(window.jQuery,!1);
 
 
 /***/ }),
-/* 51 */
+/* 56 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"banner\">\r\n    <ul>\r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=301\" />\r\n           </a>\r\n        </li>\r\n        \r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=251\" />\r\n           </a>\r\n        </li>\r\n        \r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=480\" />\r\n           </a>\r\n        </li>\r\n        \r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=362\" />\r\n           </a>\r\n        </li>\r\n        \r\n        <li>\r\n           <a href=\"./list.html?categoryId=100025\" target=\"_blank\">\r\n              <img class=\"banner-img\" src=\"https://picsum.photos/830/370?image=142\" />\r\n           </a>\r\n        </li>\r\n    </ul>\r\n    <div class=\"banner-arrow prev\">\r\n        <i class=\"fa fa-angle-left\"></i>\r\n    </div>\r\n    <div class=\"banner-arrow next\">\r\n        <i class=\"fa fa-angle-right\"></i>\r\n    </div>\r\n</div>";

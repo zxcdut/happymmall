@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 52);
+/******/ 	return __webpack_require__(__webpack_require__.s = 57);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1102,9 +1102,7 @@ var Hogan = {};
 
 
 /***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1128,11 +1126,96 @@ var _cart = {
 			success  : resolve,
 			error    : reject
 		});
+	},
+	// 添加到购物车
+	addToCart : function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/add.do'),
+			method   : 'POST',
+			data     : productInfo,
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取购物车列表
+	getCartList : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/list.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 选择购物车商品
+	selectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消选择购物车商品
+	unselectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 全选购物车商品
+	selectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消全选购物车商品
+	unselectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新购物车商品数量
+	updateProduct  :  function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/update.do'),
+			data     : productInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 删除指定商品
+	deleteProduct : function(productIds,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/delete_product.do'),
+			data     : {
+				productIds : productIds
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
 	}
 }
 module.exports = _cart;
 
 /***/ }),
+/* 6 */,
+/* 7 */,
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1148,7 +1231,7 @@ module.exports = _cart;
 __webpack_require__(9);
 var _mm   = __webpack_require__(0);
 var _user = __webpack_require__(1);
-var _cart = __webpack_require__(7);
+var _cart = __webpack_require__(5);
 var nav   = {
 	init         : function(){
 		this.bindEvent();
@@ -1187,9 +1270,9 @@ var nav   = {
 	//加载购物车数量
 	loadCartCount : function(){
 		_cart.getCartCount(function(res){
-			$('.nav .cat-count').text(res || 0);
+			$('.nav .cart-count').text(res || 0);
 		},function(errMsg){
-			$('.nav .cat-count').text(0);
+			$('.nav .cart-count').text(0);
 		});
 	}
 };
@@ -1298,14 +1381,114 @@ var _product = {
 			success  : resolve,
 			error    : reject
 		});
+	},
+	// 获取商品详细信息
+	getProductDetail : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/product/detail.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
 	}
 }
 module.exports = _product;
 
 /***/ }),
-/* 16 */,
-/* 17 */,
-/* 18 */,
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-13  12：22
+ * @Last modified time : 2019-1-13  12：22
+ */
+
+
+
+__webpack_require__(17);
+var _mm                = __webpack_require__(0);
+var templatePagination = __webpack_require__(18);
+
+var Pagination = function(){
+	var _this = this;
+	this.defaultOption = {
+		container    :null,
+		pageNum      :1,
+		pageRange    :3,
+		onSelectPage :null
+	};
+};
+// 渲染分页组件
+Pagination.prototype.render = function(userOption){
+	//合并选项
+	this.option = $.extend({}, this.defaultOption, userOption);
+	//判断容器是否为合法的jquery对象
+	if(!(this.option.container instanceof jQuery)){
+		return;
+	}
+	//判断是否只有1页
+	if(this.option.pages <= 1 ){
+		return;
+	}
+	//渲染分页内容
+	this.option.container.html(this.getPaginationHtml());
+};
+// 获取分页的html，|上一页| 1 2 3 4 =5= 6 |下一页| 5/6
+Pagination.prototype.getPaginationHtml = function(){
+	var html='';
+	var option     = this.option;
+	var pageArray  = [];
+	var start      = option.pageNum - option.pageRange > 0 ? option.pageNum - option.pageRange : 1;
+	var end        = option.pageNum + option.pageRange < option.pages ? option.pageNum + option.pageRange : option.pages;
+	//上一页按钮的数据
+	pageArray.push({
+		name     : '上一页',
+		value    : this.option.prePage,
+		disabled : !this.option.hasPreviousPage
+	});
+	// 数字按钮的处理
+	for(var i = start; i<=end ; i++){
+		pageArray.push({
+			name   : i,
+			value  : i,
+			active : (i === option.pageNum)
+		});
+	};
+	//下一页按钮的数据
+	pageArray.push({
+		name     : '下一页',
+		value    : this.option.nextPage,
+		disabled : !this.option.hasNextPage
+	});
+	html = _mm.renderHtml(templatePagination,{
+		pageArray   : pageArray,
+		pageNum     : option.pageNum,
+		pages       : option.pages
+	});
+	return html;
+};
+
+module.exports = Pagination;
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+module.exports = "this is here";
+
+/***/ }),
 /* 19 */,
 /* 20 */,
 /* 21 */,
@@ -1339,14 +1522,19 @@ module.exports = _product;
 /* 49 */,
 /* 50 */,
 /* 51 */,
-/* 52 */
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(53);
+module.exports = __webpack_require__(58);
 
 
 /***/ }),
-/* 53 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1357,13 +1545,13 @@ module.exports = __webpack_require__(53);
  */
 
 
-__webpack_require__(54);
+__webpack_require__(59);
 __webpack_require__(8);
 __webpack_require__(10);
 var _mm           = __webpack_require__(0);
 var _product      = __webpack_require__(15);
-var Pagination    = __webpack_require__(55);
-var templateIndex = __webpack_require__(58);
+var Pagination    = __webpack_require__(16);
+var templateIndex = __webpack_require__(60);
 
 var page = {
 	data   : {
@@ -1464,107 +1652,16 @@ $(function(){
 
 
 /***/ }),
-/* 54 */
+/* 59 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-13  12：22
- * @Last modified time : 2019-1-13  12：22
- */
-
-
-
-__webpack_require__(56);
-var _mm                = __webpack_require__(0);
-var templatePagination = __webpack_require__(57);
-
-var Pagination = function(){
-	var _this = this;
-	this.defaultOption = {
-		container    :null,
-		pageNum      :1,
-		pageRange    :3,
-		onSelectPage :null
-	};
-};
-// 渲染分页组件
-Pagination.prototype.render = function(userOption){
-	//合并选项
-	this.option = $.extend({}, this.defaultOption, userOption);
-	//判断容器是否为合法的jquery对象
-	if(!(this.option.container instanceof jQuery)){
-		return;
-	}
-	//判断是否只有1页
-	if(this.option.pages <= 1 ){
-		return;
-	}
-	//渲染分页内容
-	this.option.container.html(this.getPaginationHtml());
-};
-// 获取分页的html，|上一页| 1 2 3 4 =5= 6 |下一页| 5/6
-Pagination.prototype.getPaginationHtml = function(){
-	var html='';
-	var option     = this.option;
-	var pageArray  = [];
-	var start      = option.pageNum - option.pageRange > 0 ? option.pageNum - option.pageRange : 1;
-	var end        = option.pageNum + option.pageRange < option.pages ? option.pageNum + option.pageRange : option.pages;
-	//上一页按钮的数据
-	pageArray.push({
-		name     : '上一页',
-		value    : this.option.prePage,
-		disabled : !this.option.hasPreviousPage
-	});
-	// 数字按钮的处理
-	for(var i = start; i<=end ; i++){
-		pageArray.push({
-			name   : i,
-			value  : i,
-			active : (i === option.pageNum)
-		});
-	};
-	//下一页按钮的数据
-	pageArray.push({
-		name     : '下一页',
-		value    : this.option.nextPage,
-		disabled : !this.option.hasNextPage
-	});
-	html = _mm.renderHtml(templatePagination,{
-		pageArray   : pageArray,
-		pageNum     : option.pageNum,
-		pages       : option.pages
-	});
-	return html;
-};
-
-module.exports = Pagination;
-
-
-/***/ }),
-/* 56 */
+/* 60 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports) {
-
-module.exports = "this is here";
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports) {
-
-module.exports = "{{#list}}\r\n<li class=\"p-item\">\r\n\t<div class=\"p-img-con\">\r\n\t\t<a class=\"link\" href=\"./detail.html?productId={{id}}\" target=\"_blank\">\r\n\t\t\t<img class=\"p-img\" src=\"{{imageHost}}{{mainImage}}\" alt=\"{{name}}\" />\r\n\t\t</a>\r\n\t</div>\r\n\t<div class=\"p-price-con\">\r\n\t\t<span class=\"p-price\">￥{{price}}</span>\r\n\t</div>\r\n\t<div class=\"p-name-con\">\r\n\t\t<a class=\"p-name\" href=\"./detail.html?product={{id}}\" target=\"_blank\">\r\n\t\t\t{{name}}\r\n\t\t</a>\r\n\t</div>\r\n</li>\r\n{{/list}}";
+module.exports = "{{#list}}\r\n<li class=\"p-item\">\r\n\t<div class=\"p-img-con\">\r\n\t\t<a class=\"link\" href=\"./detail.html?productId={{id}}\" target=\"_blank\">\r\n\t\t\t<img class=\"p-img\" src=\"{{imageHost}}{{mainImage}}\" alt=\"{{name}}\" />\r\n\t\t</a>\r\n\t</div>\r\n\t<div class=\"p-price-con\">\r\n\t\t<span class=\"p-price\">￥{{price}}</span>\r\n\t</div>\r\n\t<div class=\"p-name-con\">\r\n\t\t<a class=\"p-name\" href=\"./detail.html?product={{id}}\" target=\"_blank\">\r\n\t\t\t{{name}}\r\n\t\t</a>\r\n\t</div>\r\n</li>\r\n{{/list}}\r\n{{^list}}\r\n   <p class=\"err-tip\">很抱歉，实在找不到您要的商品。</p>\r\n{{/list}}\r\n";
 
 /***/ })
 /******/ ]);

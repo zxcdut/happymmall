@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 59);
+/******/ 	return __webpack_require__(__webpack_require__.s = 61);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -391,6 +391,18 @@ var _product = {
 		_mm.request({
 			url      : _mm.getServerUrl('/product/list.do'),
 			data     : listParam,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取商品详细信息
+	getProductDetail : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/product/detail.do'),
+			data     : {
+				productId : productId
+			},
 			method   : 'POST',
 			success  : resolve,
 			error    : reject
@@ -1207,50 +1219,7 @@ var Hogan = {};
 
 /***/ }),
 
-/***/ 59:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(60);
-
-
-/***/ }),
-
-/***/ 60:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-02-07  11：57
- * @Last modified time : 2019-02-07  11：57
- */
-
-
-__webpack_require__(61);
-__webpack_require__(8);
-__webpack_require__(10);
-var _mm           = __webpack_require__(0);
-var _product      = __webpack_require__(15);
-var _cart         = __webpack_require__(7);
-var templateIndex = __webpack_require__(62);
-
-/***/ }),
-
-/***/ 61:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 62:
-/***/ (function(module, exports) {
-
-module.exports = "";
-
-/***/ }),
-
-/***/ 7:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1274,9 +1243,212 @@ var _cart = {
 			success  : resolve,
 			error    : reject
 		});
+	},
+	// 添加到购物车
+	addToCart : function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/add.do'),
+			method   : 'POST',
+			data     : productInfo,
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取购物车列表
+	getCartList : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/list.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 选择购物车商品
+	selectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消选择购物车商品
+	unselectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 全选购物车商品
+	selectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消全选购物车商品
+	unselectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新购物车商品数量
+	updateProduct  :  function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/update.do'),
+			data     : productInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 删除指定商品
+	deleteProduct : function(productIds,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/delete_product.do'),
+			data     : {
+				productIds : productIds
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
 	}
 }
 module.exports = _cart;
+
+/***/ }),
+
+/***/ 61:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(62);
+
+
+/***/ }),
+
+/***/ 62:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-02-07  11：57
+ * @Last modified time : 2019-02-07  11：57
+ */
+
+
+__webpack_require__(63);
+__webpack_require__(8);
+__webpack_require__(10);
+var _mm           = __webpack_require__(0);
+var _product      = __webpack_require__(15);
+var _cart         = __webpack_require__(5);
+var templateIndex = __webpack_require__(64);
+
+var page = {
+	data   : {
+		  productId  : _mm.getUrlParam('productId') || ''
+	},
+	init   : function(){
+		this.onLoad();
+		this.bindEvent();
+	},
+	onLoad : function(){
+		// 如果没有传productId，则自动跳回首页
+		if(!this.data.productId){
+			_mm.goHome();
+		}
+		this.loadDetail();
+	},
+	bindEvent : function(){
+		var _this = this;
+		// 图片预览
+		$(document).on('mouseenter','.p-img-item',function(){
+			var imageUrl = $(this).find('.p-img').attr('src');
+			$('.main-img').attr('src',imageUrl);
+		});
+		// count的操作
+		$(document).on('click','.p-count-btn',function(){
+		    var type      = $(this).hasClass('plus') ? 'plus' : 'minus';
+			var $pCount   = $('.p-count');
+			var currCount = parseInt($pCount.val());
+			var minCount  = 1;
+			var maxCount  = _this.data.detailInfo.stock || 1;
+			if(type === 'plus'){
+				$pCount.val(currCount < maxCount ? currCount + 1 : maxCount);
+			}
+			else if(type === 'minus'){
+				$pCount.val(currCount > minCount ? currCount -1 :minCount);
+			}
+		});
+		// 加入购物车
+		$(document).on('click','.cart-add',function(){
+			_cart.addToCart({
+				productId : _this.data.productId,
+				count     : $('.p-count').val()
+			},function(res){
+				window.location.href = './result.html?type=cart-add';
+			},function(errMsg){
+				_mm.errorTips(errMsg);
+			});
+		});
+	},
+	//加载商品详情
+	loadDetail : function(){
+		var _this = this;
+        var html ='';
+        var $pageWrap = $('.page-wrap');
+        // loading
+        $pageWrap.html('<div class="loading"></div>');
+        // 请求detail信息
+        _product.getProductDetail(this.data.productId,function(res){
+        	_this.filter(res);
+        	// 缓存住detail的数据
+        	_this.data.detailInfo = res;
+        	// render
+        	html = _mm.renderHtml(templateIndex,res);
+        	$pageWrap.html(html);
+        },function(errMsg){
+        	$pageWrap.html('<p>此商品太淘气，找不到了</p>')
+        });
+	},
+	// 数据匹配
+	filter :　function(data){
+		data.subImages = data.subImages.split(',');
+	}
+};
+$(function(){
+	page.init();
+})
+
+
+/***/ }),
+
+/***/ 63:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 64:
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"intro-wrap\">\r\n\t<div class=\"p-img-con\">\r\n\t\t<div class=\"main-img-con\">\r\n\t\t\t<img class=\"main-img\" src=\"{{imageHost}}{{mainImage}}\" alt=\"{{name}}\" />\r\n\t\t</div>\r\n\t\t<ul class=\"p-img-list\">\r\n\t\t    {{#subImages}}\r\n\t\t\t<li class=\"p-img-item\">\r\n\t\t\t\t<img class=\"p-img\" src=\"{{imageHost}}{{.}}\" alt=\"{{name}}\"/>\r\n\t\t\t</li>\r\n\t\t\t{{/subImages}}\r\n\t\t</ul>\r\n\t</div>\r\n\t<div class=\"p-info-con\">\r\n\t\t<h1 class=\"p-name\">{{name}}</h1>\r\n\t\t<p class=\"p-subtitle\">{{subtitle}}</p>\r\n\t\t<div class=\"p-info-item p-price-con\">\r\n\t\t\t<span class=\"label\">价格：</span>\r\n\t\t\t<span class=\"info\">￥{{price}}</span>\r\n\t\t</div>\r\n\t\t<div class=\"p-info-item\">\r\n\t\t\t<span class=\"label\">库存：</span>\r\n\t\t\t<span class=\"info\">{{stock}}</span>\r\n\t\t</div>\r\n\t\t<div class=\"p-info-item p-count-con\">\r\n\t\t\t<span class=\"label\">数量：</span>\r\n\t\t\t<input class=\"p-count\" value=\"1\" readonly=\"\" />\r\n\t\t\t<span class=\"p-count-btn plus\">+</span>\r\n\t\t\t<span class=\"p-count-btn minus\">-</span>\r\n\t\t</div>\r\n\t\t<div class=\"info-item\">\r\n\t\t\t<a class=\"btn cart-add\">加入购物车</a>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n<div class=\"detail-wrap\">\r\n    <div class=\"detail-tab-con\">\r\n\t   <ul class=\"tab-list\">\r\n\t\t  <li class=\"tab-item active\">商品详情</li>\r\n\t\t  <li class=\"tab-item\">商品详情</li>\r\n\t\t  <li class=\"tab-item\">商品详情</li>\r\n\t   </ul>\r\n    </div>\r\n    <div class=\"detail-con\">\r\n\t   {{{detail}}}\r\n    </div>\r\n</div>";
 
 /***/ }),
 
@@ -1295,7 +1467,7 @@ module.exports = _cart;
 __webpack_require__(9);
 var _mm   = __webpack_require__(0);
 var _user = __webpack_require__(1);
-var _cart = __webpack_require__(7);
+var _cart = __webpack_require__(5);
 var nav   = {
 	init         : function(){
 		this.bindEvent();
@@ -1334,9 +1506,9 @@ var nav   = {
 	//加载购物车数量
 	loadCartCount : function(){
 		_cart.getCartCount(function(res){
-			$('.nav .cat-count').text(res || 0);
+			$('.nav .cart-count').text(res || 0);
 		},function(errMsg){
-			$('.nav .cat-count').text(0);
+			$('.nav .cart-count').text(0);
 		});
 	}
 };

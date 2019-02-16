@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 72);
+/******/ 	return __webpack_require__(__webpack_require__.s = 92);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1252,30 +1252,6 @@ var Hogan = {};
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
- */
-
-
-
-__webpack_require__(6);
-
-
-/***/ }),
-
-/***/ 6:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
  * @Date: 2019-1-15  09：24
  * @Last modified time : 2019-1-15  09：24
  */
@@ -1294,21 +1270,201 @@ var _cart = {
 			success  : resolve,
 			error    : reject
 		});
+	},
+	// 添加到购物车
+	addToCart : function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/add.do'),
+			method   : 'POST',
+			data     : productInfo,
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取购物车列表
+	getCartList : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/list.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 选择购物车商品
+	selectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消选择购物车商品
+	unselectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 全选购物车商品
+	selectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消全选购物车商品
+	unselectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新购物车商品数量
+	updateProduct  :  function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/update.do'),
+			data     : productInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 删除指定商品
+	deleteProduct : function(productIds,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/delete_product.do'),
+			data     : {
+				productIds : productIds
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
 	}
 }
 module.exports = _cart;
 
 /***/ }),
 
-/***/ 72:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(73);
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
+ */
+
+
+
+__webpack_require__(7);
 
 
 /***/ }),
 
-/***/ 73:
+/***/ 7:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 8:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-14  23：32
+ * @Last modified time : 2019-1-14  23：32
+ */
+
+
+
+__webpack_require__(9);
+var _mm   = __webpack_require__(0);
+var _user = __webpack_require__(1);
+var _cart = __webpack_require__(5);
+var nav   = {
+	init         : function(){
+		this.bindEvent();
+		this.loadUserInfo();
+		this.loadCartCount();
+		//很关键的一步，这样输出的时候才是nav对象本身
+		return this;      
+	},
+	bindEvent    : function(){
+		// 登录点击事件
+		$('.js-login').click(function(){
+			_mm.doLogin();
+		});
+		// 注册点击事件
+		$('.js-register').click(function(){
+			window.location.href = './user-register.html' 
+		});
+		// 退出点击事件
+		$('.js-logout').click(function(){
+			_user.logout(function(res){
+				window.location.reload();
+			},function(errMsg){
+				_mm.errorTips(errMsg);
+			});
+		});
+	},
+	//加载用户信息
+	loadUserInfo : function(){
+		_user.checkLogin(function(res){
+				$('.user.not-login').hide().siblings('.user.login').show()
+				     .find('.username').text(res.username);
+			},function(errMsg){
+				
+		});
+	},
+	//加载购物车数量
+	loadCartCount : function(){
+		_cart.getCartCount(function(res){
+			$('.nav .cart-count').text(res || 0);
+		},function(errMsg){
+			$('.nav .cart-count').text(0);
+		});
+	}
+};
+//模块输出的时候初始化一下nav对象
+module.exports = nav.init();
+
+
+/***/ }),
+
+/***/ 9:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 92:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(93);
+
+
+/***/ }),
+
+/***/ 93:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1320,9 +1476,9 @@ module.exports = __webpack_require__(73);
  */
 
 
-__webpack_require__(74);
+__webpack_require__(94);
 //引用common中nav-simple下的index.js
-__webpack_require__(5);
+__webpack_require__(6);
 //引用common中nav下的index.js
 __webpack_require__(8);
 //引用common中header下的index.js
@@ -1415,80 +1571,7 @@ $(function(){
 
 /***/ }),
 
-/***/ 74:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-14  23：32
- * @Last modified time : 2019-1-14  23：32
- */
-
-
-
-__webpack_require__(9);
-var _mm   = __webpack_require__(0);
-var _user = __webpack_require__(1);
-var _cart = __webpack_require__(7);
-var nav   = {
-	init         : function(){
-		this.bindEvent();
-		this.loadUserInfo();
-		this.loadCartCount();
-		//很关键的一步，这样输出的时候才是nav对象本身
-		return this;      
-	},
-	bindEvent    : function(){
-		// 登录点击事件
-		$('.js-login').click(function(){
-			_mm.doLogin();
-		});
-		// 注册点击事件
-		$('.js-register').click(function(){
-			window.location.href = './user-register.html' 
-		});
-		// 退出点击事件
-		$('.js-logout').click(function(){
-			_user.logout(function(res){
-				window.location.reload();
-			},function(errMsg){
-				_mm.errorTips(errMsg);
-			});
-		});
-	},
-	//加载用户信息
-	loadUserInfo : function(){
-		_user.checkLogin(function(res){
-				$('.user.not-login').hide().siblings('.user.login').show()
-				     .find('.username').text(res.username);
-			},function(errMsg){
-				
-		});
-	},
-	//加载购物车数量
-	loadCartCount : function(){
-		_cart.getCartCount(function(res){
-			$('.nav .cat-count').text(res || 0);
-		},function(errMsg){
-			$('.nav .cat-count').text(0);
-		});
-	}
-};
-//模块输出的时候初始化一下nav对象
-module.exports = nav.init();
-
-
-/***/ }),
-
-/***/ 9:
+/***/ 94:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

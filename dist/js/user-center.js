@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 75);
+/******/ 	return __webpack_require__(__webpack_require__.s = 95);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1252,30 +1252,6 @@ var Hogan = {};
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-1-14  22：29
- * @Last modified time : 2019-1-14  22：29
- */
-
-
-
-__webpack_require__(6);
-
-
-/***/ }),
-
-/***/ 6:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
  * @Date: 2019-1-15  09：24
  * @Last modified time : 2019-1-15  09：24
  */
@@ -1294,89 +1270,116 @@ var _cart = {
 			success  : resolve,
 			error    : reject
 		});
+	},
+	// 添加到购物车
+	addToCart : function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/add.do'),
+			method   : 'POST',
+			data     : productInfo,
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 获取购物车列表
+	getCartList : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/list.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 选择购物车商品
+	selectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消选择购物车商品
+	unselectProduct : function(productId,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select.do'),
+			data     : {
+				productId : productId
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 全选购物车商品
+	selectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 取消全选购物车商品
+	unselectAllProduct : function(resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/un_select_all.do'),
+			method   : 'GET',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 更新购物车商品数量
+	updateProduct  :  function(productInfo,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/update.do'),
+			data     : productInfo,
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
+	},
+	// 删除指定商品
+	deleteProduct : function(productIds,resolve,reject){
+		_mm.request({
+			url      : _mm.getServerUrl('/cart/delete_product.do'),
+			data     : {
+				productIds : productIds
+			},
+			method   : 'POST',
+			success  : resolve,
+			error    : reject
+		});
 	}
 }
 module.exports = _cart;
 
 /***/ }),
 
-/***/ 75:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(76);
-
-
-/***/ }),
-
-/***/ 76:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /*
  * @autor：xiangzi
- * @Date: 2019-2-2  22：51
- * @Last modified time : 2019-2-2  22：51
- * 
+ * @Date: 2019-1-14  22：29
+ * @Last modified time : 2019-1-14  22：29
  */
 
 
-__webpack_require__(77);
-//引用common中nav-simple下的index.js
-__webpack_require__(5);
-//引用common中nav下的index.js
-__webpack_require__(8);
-//引用common中header下的index.js
-__webpack_require__(10);
-//引用common中nav-side下的index.js
-var navSide       = __webpack_require__(12);
-// require('util/mm.js')就表示引入util/mm.js了，
-//但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
-var _mm           = __webpack_require__(0);
-var _user         = __webpack_require__(1);
-var templateIndex = __webpack_require__(78);
 
-// 登录页的逻辑部分
-var page = {
-	init      : function(){
-		this.onLoad();
-	},
-	onLoad : function(){
-		// 初始化左侧菜单
-		navSide.init({
-			name: 'user-center'
-		});
-		// 加载用户信息
-		this.loadUserInfo();
-	},
-	// 加载用户信息
-	loadUserInfo : function(){
-		var userHtml = '';
-		_user.getUserInfo(function(res){
-			userHtml = _mm.renderHtml(templateIndex,res);
-			$('.panel-body').html(userHtml);
-		},function(errMsg){
-			_mm.errorTips(errMsg);
-		});
-	}
-};
-$(function(){
-	page.init();
-});
+__webpack_require__(7);
 
 
 /***/ }),
 
-/***/ 77:
+/***/ 7:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 78:
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"user-info\">\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">用户名：</span>\r\n\t\t<span class=\"text\">{{username}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">电 话：</span>\r\n\t\t<span class=\"text\">{{phone}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">邮 箱：</span>\r\n\t\t<span class=\"text\">{{email}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">问 题：</span>\r\n\t\t<span class=\"text\">{{question}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">答 案：</span>\r\n\t\t<span class=\"text\">{{answer}}</span>\r\n\t</div>\r\n\t<a class=\"btn btn-submit\" href=\"./user-center-update.html\">编辑</a>\r\n</div>";
 
 /***/ }),
 
@@ -1395,7 +1398,7 @@ module.exports = "<div class=\"user-info\">\r\n\t<div class=\"form-line\">\r\n\t
 __webpack_require__(9);
 var _mm   = __webpack_require__(0);
 var _user = __webpack_require__(1);
-var _cart = __webpack_require__(7);
+var _cart = __webpack_require__(5);
 var nav   = {
 	init         : function(){
 		this.bindEvent();
@@ -1434,9 +1437,9 @@ var nav   = {
 	//加载购物车数量
 	loadCartCount : function(){
 		_cart.getCartCount(function(res){
-			$('.nav .cat-count').text(res || 0);
+			$('.nav .cart-count').text(res || 0);
 		},function(errMsg){
-			$('.nav .cat-count').text(0);
+			$('.nav .cart-count').text(0);
 		});
 	}
 };
@@ -1450,6 +1453,86 @@ module.exports = nav.init();
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 95:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(96);
+
+
+/***/ }),
+
+/***/ 96:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-2-2  22：51
+ * @Last modified time : 2019-2-2  22：51
+ * 
+ */
+
+
+__webpack_require__(97);
+//引用common中nav-simple下的index.js
+__webpack_require__(6);
+//引用common中nav下的index.js
+__webpack_require__(8);
+//引用common中header下的index.js
+__webpack_require__(10);
+//引用common中nav-side下的index.js
+var navSide       = __webpack_require__(12);
+// require('util/mm.js')就表示引入util/mm.js了，
+//但为什么还要有个var _mm呢？就是因为便于后续使用里面的方法呀！
+var _mm           = __webpack_require__(0);
+var _user         = __webpack_require__(1);
+var templateIndex = __webpack_require__(98);
+
+// 登录页的逻辑部分
+var page = {
+	init      : function(){
+		this.onLoad();
+	},
+	onLoad : function(){
+		// 初始化左侧菜单
+		navSide.init({
+			name: 'user-center'
+		});
+		// 加载用户信息
+		this.loadUserInfo();
+	},
+	// 加载用户信息
+	loadUserInfo : function(){
+		var userHtml = '';
+		_user.getUserInfo(function(res){
+			userHtml = _mm.renderHtml(templateIndex,res);
+			$('.panel-body').html(userHtml);
+		},function(errMsg){
+			_mm.errorTips(errMsg);
+		});
+	}
+};
+$(function(){
+	page.init();
+});
+
+
+/***/ }),
+
+/***/ 97:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 98:
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"user-info\">\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">用户名：</span>\r\n\t\t<span class=\"text\">{{username}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">电 话：</span>\r\n\t\t<span class=\"text\">{{phone}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\"> \r\n\t\t<span class=\"label\">邮 箱：</span>\r\n\t\t<span class=\"text\">{{email}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">问 题：</span>\r\n\t\t<span class=\"text\">{{question}}</span>\r\n\t</div>\r\n\t<div class=\"form-line\">\r\n\t\t<span class=\"label\">答 案：</span>\r\n\t\t<span class=\"text\">{{answer}}</span>\r\n\t</div>\r\n\t<a class=\"btn btn-submit\" href=\"./user-center-update.html\">编辑</a>\r\n</div>";
 
 /***/ })
 

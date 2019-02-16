@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 83);
+/******/ 	return __webpack_require__(__webpack_require__.s = 103);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -166,6 +166,48 @@ var _mm = {
 //将_mm对象向外输出
 module.exports = _mm;
 
+
+/***/ }),
+
+/***/ 103:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(104);
+
+
+/***/ }),
+
+/***/ 104:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * @autor：xiangzi
+ * @Date: 2019-1-19  01：03
+ * @Last modified time : 2019-1-19  01：03
+ * 
+ */
+
+
+
+__webpack_require__(105);
+__webpack_require__(6);
+var _mm = __webpack_require__(0);
+
+$(function(){
+	var type     = _mm.getUrlParam('type') || 'default';
+	var $element = $('.' + type + '-success');
+	//显示对应元素
+	$element.show();
+})
+
+
+/***/ }),
+
+/***/ 105:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -975,7 +1017,7 @@ var Hogan = {};
 
 /***/ }),
 
-/***/ 5:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -987,54 +1029,12 @@ var Hogan = {};
 
 
 
-__webpack_require__(6);
+__webpack_require__(7);
 
 
 /***/ }),
 
-/***/ 6:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 83:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(84);
-
-
-/***/ }),
-
-/***/ 84:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * @autor：xiangzi
- * @Date: 2019-1-19  01：03
- * @Last modified time : 2019-1-19  01：03
- * 
- */
-
-
-
-__webpack_require__(85);
-__webpack_require__(5);
-var _mm = __webpack_require__(0);
-
-$(function(){
-	var type     = _mm.getUrlParam('type') || 'default';
-	var $element = $('.' + type + '-success');
-	//显示对应元素
-	$element.show();
-})
-
-
-/***/ }),
-
-/***/ 85:
+/***/ 7:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
